@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { CustomVideo } from "./video";
 import { Typography, styled as StyledM, Box } from "@mui/material";
-import { AppContext } from "../../../contexts";
 
 export const PageTitle = ({ title }: {title: string}) => (
     <StyledPageTitle variant="h2" component="h3" color="textSecondary" align="center">
@@ -34,14 +32,12 @@ const HeroContent = styled.div`
     align-items: center;
 `;
 
-export const Home = () =>
+export const Leaderboard = () =>
 {
-    const context = useContext(AppContext);
     return (
         <HeroContainer>
-            {/* <CustomVideo/> */}
             <HeroContent>
-                <PageTitle title={"Welcome"} />
+                <PageTitle title={"Welcome !"} />
                 <Box sx = {{ flexGrow: 1, p: 5 }} /> 
             </HeroContent>
         </HeroContainer>

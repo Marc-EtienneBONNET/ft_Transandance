@@ -7,6 +7,7 @@ import EqualizerIcon from '@mui/icons-material/Equalizer';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
 import SettingsIcon from '@mui/icons-material/Settings';
+import HelpIcon from '@mui/icons-material/Help';
 
 const routes: Array<Route> = [
     {
@@ -93,6 +94,14 @@ const routes: Array<Route> = [
                 icon: LockIcon,
             },
         ]
+    },
+    {
+        key: 'router-about',
+        title: 'About',
+        description: 'About',
+        isEnabled: true,
+        path: '/about',
+        icon: HelpIcon,
     },
 ];
 

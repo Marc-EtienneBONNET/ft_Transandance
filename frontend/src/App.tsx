@@ -10,6 +10,8 @@ import AppClient from './clients';
 import { Layout } from './components/Layout';
 import { Home } from './components/Pages/Home';
 import { Game } from './components/Pages/PlayGame';
+import { About } from './components/Pages/About/about';
+import { Leaderboard } from './components/Pages/Social/Leaderboard';
 
 function App() {
   const appClient = new AppClient();
@@ -41,10 +43,11 @@ function App() {
               <Route path="/game/hard:ID" element={<Layout children={<Home/>} /> } />
               <Route path="/game/spectate" element={<Layout children={<Home/>} /> } />  
               <Route path="/social/chat" element={<Layout children={<Home/>} /> } />
-              <Route path="/social/leaderboard" element={<Layout children={<Home/>} /> } />
+              <Route path="/social/leaderboard" element={<Layout children={<Leaderboard/>} /> } />
               <Route path="/user/profile" element={<Layout children={<Home/>} /> } />
               <Route path="/user/settings" element={<Layout children={<Home/>} /> } />
               <Route path="/user/twofactor" element={<Layout children={<Home/>} /> } />
+              <Route path="/about" element={<Layout children={<About/>} /> } />
             </Routes>
           </Router>
         </ThemeProvider>

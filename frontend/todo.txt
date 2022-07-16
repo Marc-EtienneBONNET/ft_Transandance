@@ -1,6 +1,3 @@
-Revoir la largeur de la petite collone de gauche
-Creer une page About
-Creer tous les components de notre site (a vide bien entendu)
 commencer a plancher sur le leaderboard en apprenant a utiliser context
 integrer l'API 42 sur la page de SignIn
 Faire le chat

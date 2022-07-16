@@ -19,11 +19,14 @@ export const NavMenu = ({ open, toggleMenu }: NavMenuProps) => {
 };
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-  ...theme.mixins.toolbar,
+  height: 45,
+  width: 24,
+  alignContent: "center",
+  alignItems: "center",
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (props) => props !== 'open' })(({ theme, open }) => ({
-  with: DRAWER_WIDTH,
+  width: DRAWER_WIDTH,
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
