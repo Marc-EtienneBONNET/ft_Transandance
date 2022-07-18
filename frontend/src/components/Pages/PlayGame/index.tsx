@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { CustomVideo } from "./video";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';import { PageTitle } from "../Home";
 
-const HeroContainer = styled.div`
+export const HeroContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,7 @@ const HeroContainer = styled.div`
     z-index: 1;
 `;
 
-const HeroContent = styled.div`
+export const HeroContent = styled.div`
     z-index: 3;
     max-width: 1200px;
     position: absolute;
