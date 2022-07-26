@@ -13,6 +13,9 @@ import { Game } from './components/Pages/PlayGame';
 import { About } from './components/Pages/About/about';
 import { Leaderboard } from './components/Pages/Social/Leaderboard';
 import SignIn from './components/Pages/User/SignIn/SignIn';
+import { Register } from './components/Pages/User/SignIn/Register';
+import { UpdateProfile } from './components/Pages/User/Settings/UpdateProfile';
+import TwoFactor from './components/Pages/User/Settings/EnableTwoFa';
 
 function App() {
   const appClient = new AppClient();
@@ -35,8 +38,9 @@ function App() {
           <CssBaseline />
           <Router>
             <Routes>
-              <Route path="/" element={(appClient.user.isLoggedIn ? <Layout children={<Home/>} /> : <SignIn/>)} />
+              <Route path="/" element={<SignIn/>} />
               <Route path="/home" element={<Layout children={<Home/>} /> } />
+              <Route path="/register" element={<Layout children={<Register/>} /> } />
               <Route path="/game" element={<Layout children={<Game/>} /> } />
               <Route path="/game/waitingroom" element={<Layout children={<Home/>} /> } />
               <Route path="/game/easy:ID" element={<Layout children={<Home/>} /> } />
@@ -46,8 +50,8 @@ function App() {
               <Route path="/social/chat" element={<Layout children={<Home/>} /> } />
               <Route path="/social/leaderboard" element={<Layout children={<Leaderboard/>} /> } />
               <Route path="/user/profile" element={<Layout children={<Home/>} /> } />
-              <Route path="/user/settings" element={<Layout children={<Home/>} /> } />
-              <Route path="/user/twofactor" element={<Layout children={<Home/>} /> } />
+              <Route path="/user/updateprofile" element={<Layout children={<UpdateProfile/>} /> } />
+              <Route path="/user/twofactor" element={<Layout children={<TwoFactor/>} /> } />
               <Route path="/about" element={<Layout children={<About/>} /> } />
             </Routes>
           </Router>

@@ -41,8 +41,8 @@ export const Game = () =>
                     <Button variant="contained" size="large" style={{ fontSize: 25 }} endIcon={<ArrowForwardIosIcon/>} >Hard</Button>
                 </Grid>
                 {/* <Box sx = {{ flexGrow: 1, p: 7 }} /> */}
-                <Typography color="textSecondary" align="center" marginTop="20px" marginBottom="20px" fontStyle={"italic"}>Click on spectate to watch a currently happening game</Typography>
-                <Button variant="contained" size="large" style={{ fontSize: 25 }} endIcon={<ArrowForwardIosIcon/>} >Spectate</Button>
+                {/* <Typography color="textSecondary" align="center" marginTop="20px" marginBottom="20px" fontStyle={"italic"}>Click on spectate to watch a currently happening game</Typography>
+                <Button variant="contained" size="large" style={{ fontSize: 25 }} endIcon={<ArrowForwardIosIcon/>} >Spectate</Button> */}
             </HeroContent>
         </HeroContainer>
     )

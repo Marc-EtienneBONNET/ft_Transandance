@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { styled, Box } from "@mui/material";
 import { FOOTER_HEIGHT } from "../../utils/constants";
 import { Footer } from "../Footer";
 import { NavMenu } from "../Menu";
 import { Header } from "../Header/header";
+import { AppContext } from "../../contexts";
+import { useNavigate } from "react-router-dom";
 
 const LayoutWrapper = styled('div')`
   min-height: 100vh;
@@ -26,6 +28,14 @@ interface LayoutProps {
 export const Layout = (props: LayoutProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => setIsOpen((isOpen) => !isOpen);
+    let nav = useNavigate();
+    const context = useContext(AppContext);
+    
+    useEffect(() => {
+        if (!context.user.isLoggedIn){
+            return nav("/");
+        }
+    },[context.user.isLoggedIn]);
 
     return (
         <LayoutWrapper>

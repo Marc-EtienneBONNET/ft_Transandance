@@ -14,7 +14,7 @@ class AppClient implements IAppContext {
             numberWins: 100,
             numberLosses: 0,
             numberGamesPlayed: 100,
-            isLoggedIn: false,
+            isLoggedIn: true,
         };
     }
 }

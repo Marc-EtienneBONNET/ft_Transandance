@@ -37,8 +37,8 @@ export const Leaderboard = () =>
     return (
         <HeroContainer>
             <HeroContent>
-                <PageTitle title={"Welcome !"} />
-                <Box sx = {{ flexGrow: 1, p: 5 }} /> 
+                <Typography fontSize={32}>Leaderboard</Typography>
+                <Typography fontSize={18}>Per number of wins</Typography>
             </HeroContent>
         </HeroContainer>
     )

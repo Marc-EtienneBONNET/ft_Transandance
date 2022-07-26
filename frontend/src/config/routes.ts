@@ -8,13 +8,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
+import { Game } from "../components/Pages/PlayGame";
 
 const routes: Array<Route> = [
     {
         key: 'router-home',
         title: 'Home',
         description: 'Home page',
-        // component: Home,
         isEnabled: true,
         path: '/home',
         icon: HomeIcon,
@@ -24,7 +24,6 @@ const routes: Array<Route> = [
         key: 'router-playgame',
         title: 'Play Game',
         description: 'Play Game',
-        // component: PlayGame,
         isEnabled: true,
         path: '/game',
         icon: GamepadIcon,
@@ -41,7 +40,6 @@ const routes: Array<Route> = [
                 key: 'router-chat',
                 title: 'Chat',
                 description: 'Chat page',
-                // component: Chat,
                 isEnabled: true,
                 path: '/social/chat',
                 icon: ChatIcon,
@@ -50,7 +48,6 @@ const routes: Array<Route> = [
                 key: 'router-leaderboard',
                 title: 'Leaderboard',
                 description: 'The top players',
-                // component: Leaderboard,
                 isEnabled: true,
                 path: '/social/leaderboard',
                 icon: EqualizerIcon,
@@ -69,26 +66,23 @@ const routes: Array<Route> = [
                 key: 'router-profile',
                 title: 'My profile',
                 description: 'My profile',
-                // component: Profile,
                 isEnabled: true,
                 path: '/user/profile',
                 icon: AccountCircleIcon,
             },
 
             {
-                key: 'router-settings',
-                title: 'Setting',
-                description: 'Settings',
-                // component: Settings,
+                key: 'router-updateprofile',
+                title: 'Update Profile',
+                description: 'Update Profile',
                 isEnabled: true,
-                path: '/user/settings',
+                path: '/user/updateprofile',
                 icon: SettingsIcon,
             },
             {
                 key: 'router-twofact',
                 title: 'Two Factor',
                 description: 'Activate or Deactivate the 2FA',
-                // component: TwoFactor,
                 isEnabled: true,
                 path: '/user/twofactor',
                 icon: LockIcon,
