@@ -42,7 +42,7 @@ export const Home = () =>
             {/* <CustomVideo/> */}
             <HeroContent>
                 <PageTitle title={"Welcome"} />
-                <Typography fontSize={32} color="textSecondary"> {context.user.name} ! </Typography>
+                <Typography fontSize={32} color="textSecondary"> {context.user.username} ! </Typography>
                 <Box sx = {{ flexGrow: 1, p: 5 }} /> 
             </HeroContent>
         </HeroContainer>

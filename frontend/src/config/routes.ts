@@ -45,11 +45,11 @@ const routes: Array<Route> = [
                 icon: ChatIcon,
             },
             {
-                key: 'router-leaderboard',
-                title: 'Leaderboard',
-                description: 'The top players',
+                key: 'router-publicprofiles',
+                title: 'Public Profiles',
+                description: 'The playes',
                 isEnabled: true,
-                path: '/social/leaderboard',
+                path: '/social/publicprofiles',
                 icon: EqualizerIcon,
             },
         ]

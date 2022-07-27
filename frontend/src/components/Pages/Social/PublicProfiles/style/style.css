@@ -1,3 +1,33 @@
+.PublicProfilesComponent {
+    background-color: lightgray;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.profiles {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 800px;
+    text-align: center;
+    align-items: center;
+}
+
+.users-table {
+    width: 100%;
+}
+
+.avatarIMG {
+    width: 50px;
+    height: auto;
+    border-radius: 90px;
+}
+
 form {
     text-align: center;
 }

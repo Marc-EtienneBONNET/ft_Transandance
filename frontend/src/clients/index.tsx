@@ -6,15 +6,13 @@ class AppClient implements IAppContext {
 
     constructor() {
         this.user = {
-            id: "1234",
-            name: "Marc-Eloi",
-            password: "password",
-            createdAt: new Date(),
-            isAdmin: true,
+            id: 0,
+            username: "Marc-Eloi",
             numberWins: 100,
             numberLosses: 0,
             numberGamesPlayed: 100,
             isLoggedIn: true,
+            twofa: true,
         };
     }
 }
