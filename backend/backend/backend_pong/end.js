@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backend_pong_end.js                                :+:      :+:    :+:   */
+/*   end.js                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 18:40:51 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/07/27 18:41:41 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/07/28 19:10:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ var {
 exports.end = async function(socket, data)
 {
 	var tmp = await takeGame(data.game.game_id);
+	console.log(data.game);
+	console.log("rows");
+	console.log(tmp.rows);
+	console.log("rows[0]");
+	console.log(tmp.rows[0]);
 	var game_id = tmp.rows[0].game_id;
 	var raquette1_id = tmp.rows[0].raquette1_id;
 	var raquette2_id = tmp.rows[0].raquette2_id;

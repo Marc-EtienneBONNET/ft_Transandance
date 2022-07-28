@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 18:40:51 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/07/28 17:54:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/07/28 19:14:37 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ async function initNewMembre()
    }
    catch(e){console.log("erreur l or de l init des ellement du game " + e)}
 }
+var game;
 
 async function insertInitValue()
 {
@@ -101,7 +102,7 @@ async function insertInitValue()
 	catch(e){console.log("erreur l or de la rentrer des valeur d init " + e)}
 }
 
-async function chooseGame(socket)
+async function chooseGame()
 {
 	var tmp = await takeAllGame();
 	var game;
@@ -144,9 +145,9 @@ async function chooseGame(socket)
 exports.initGames = async function(socket)
 {
 	await createTab();
-	var tmp = await chooseGame(socket)
-	socket.emit('sendGameValue', tmp)
+	var tmp = await chooseGame()
+	socket.send(JSON.stringify({type:'sendGameValue', data:tmp}));
 	var tmp2 = {ball:await takeBall(tmp.game.ball_id), game:tmp.game}
-	socket.emit('checkPlay')
-	socket.emit('drawScorAndDeco', {game:tmp.game})
+	socket.send(JSON.stringify({type:'checkPlay'}));
+	socket.send(JSON.stringify({type:'drawScorAndDeco', game:tmp.game}))
 }

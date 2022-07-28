@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backend_pong.js                                    :+:      :+:    :+:   */
+/*   utile.js                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 10:15:03 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/07/27 18:48:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/07/28 19:45:03 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ var {
 exports.drawScorAndDeco = async function(socket, data){
 	var tmp = await takeGame(data.game.game_id);
 	var game = tmp.rows[0]
-	socket.emit('drawScorAndDeco', {game:game})
+	socket.send(JSON.stringify({type:'drawScorAndDeco', game:game}))
 }
 
 exports.checkPlay = async function(socket, data)
@@ -48,12 +48,14 @@ exports.checkPlay = async function(socket, data)
 	var checkRaquette1 = await takeRaquette(data.game.raquette1_id);
 	var checkRaquette2 = await takeRaquette(data.game.raquette2_id);
 	var tmp2 = {ball:await takeBall(data.game.ball_id), game:data.game}
+	var tmp2 = {ball:await takeBall(data.game.ball_id), game:await takeGame(data.game.game_id)}
+	
 	if (checkRaquette1.rows[0].connect == true && checkRaquette2.rows[0].connect == true)
 	{
-		socket.emit('sendBall', tmp2);
-		return ;
+	 	socket.send(JSON.stringify({type:'sendBall', tmp2}));
+	 	return ;
 	}
 	else 
-		socket.emit('checkPlay')
+	 	socket.send(JSON.stringify({type:'checkPlay'}));
 }
 

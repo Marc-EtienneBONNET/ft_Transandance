@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backend_pong_ball.js                               :+:      :+:    :+:   */
+/*   ball.js                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 18:40:51 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/07/27 18:46:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/07/28 19:47:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,6 @@ exports.mouvBall = async function(socket, data)
 	}
 	game = await takeGame(data.game.game_id);
 	var ball = await takeBall(game.rows[0].ball_id);
-	socket.emit('sendBall', {ball:ball,game:game.rows[0]});
+	var tmp2 = {ball:await takeBall(game.rows[0].ball_id), game:await takeGame(game.rows[0].game_id)}
+	socket.send(JSON.stringify({type:'sendBall', tmp2}));
 }

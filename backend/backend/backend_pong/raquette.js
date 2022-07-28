@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backend_pong_raquette.js                           :+:      :+:    :+:   */
+/*   raquette.js                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 18:40:51 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/07/27 18:48:51 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/07/28 18:35:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ var {
 	mouvGameRaquette1,mouvGameRaquette2,mouvGameBall,mouvGameCanvasX,mouvGameCanvasY,mouvGameBlocksize,mouvGameDificult,mouvGamePointPlayer1,mouvGamePointPlayer2, mouvGameFin
 } = require('./../../database/apiPong/mouv');
 
-exports.sendRaquette = async function(socket, data)
+exports.sendRaquette = async function(socket, game)
 {
-	var raq1 = await takeRaquette(data.game.raquette1_id);
-	var raq2 = await takeRaquette(data.game.raquette2_id);
-	var game = await takeGame(data.game.game_id)
-	socket.emit('sendRaquette', {raq1:raq1.rows[0], raq2:raq2.rows[0], game:game.rows[0]})
+	var raq1 = await takeRaquette(game.raquette1_id);
+	var raq2 = await takeRaquette(game.raquette2_id);
+	var game = await takeGame(game.game_id)
+	socket.send(JSON.stringify({type:'sendRaquette', raq1:raq1.rows[0], raq2:raq2.rows[0], game:game.rows[0]}))
 }
 
 exports.mouvRaquette = async function(socket, data)
