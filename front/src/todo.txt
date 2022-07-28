@@ -1,8 +1,0 @@
-Reprendre le plan general du site pour que tu saches comment t'y prendre
-
-Page d'accueil
-    -->4 pages deroulantes pour pas forcer
-    -->Play
-    -->Petit classement des Meilleurs joueurs (genre 3 premiers)
-    -->Social avec 2 boutons, 1 pour join le chat, 1 pour voir les profiles
-    -->About: tuto du jeu, equipe de BGs

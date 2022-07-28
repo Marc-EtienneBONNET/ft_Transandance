@@ -1,4 +1,3 @@
-import { LooksTwoTone } from "@material-ui/icons";
 import { Typography } from "@mui/material";
 import React, { SyntheticEvent, useEffect, useState} from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
