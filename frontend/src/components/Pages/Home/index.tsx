@@ -36,7 +36,7 @@ const HeroContent = styled.div`
 
 export const Home = () =>
 {
-    console.log("testmultiple");
+    console.log("We come here");
     const context = useContext(AppContext);
     return (
         <HeroContainer>

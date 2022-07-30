@@ -14,11 +14,19 @@ const {Client} = require('pg');
 
 const client1 = new Client({
 	host:"localhost",
-	user:"postgres",
+	user:"root",
 	password:"root",
-	database:"pong",
+	database:"ft_transcendence",
 	port:5432
 });
+
+// const client1 = new Client({
+// 	host:"transcendencedb.ctvxdqqpfzzy.us-east-1.rds.amazonaws.com",
+// 	user:"postgres",
+// 	password:"postgres",
+// 	database:"transcendencedb",
+// 	port:5432
+// });
 
 client1.connect()
 .then(() => {

@@ -1,8 +1,11 @@
+
 import { Typography } from "@mui/material";
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { GameData } from "../../../../datamodels/game";
 import { User } from "../../../../datamodels/user";
 import { HeroContainer } from "../../PlayGame";
+import "../style/style.css"
+import DefaultAvatar from "../../../../images/DefaultAvatar.png"
 
 var GameDataTmp = [
     {
@@ -59,7 +62,7 @@ var FriendTmp = [
         numberGamesPlayed: 0,
     },
     {
-        id: 1,
+        id: 2,
         username: "Jean",
         isAdmin: false,
         isLoggedIn: true,
@@ -70,7 +73,7 @@ var FriendTmp = [
         numberGamesPlayed: 0,
     },
     {
-        id: 1,
+        id: 3,
         username: "Pierre",
         isAdmin: false,
         isLoggedIn: true,
@@ -88,10 +91,9 @@ export const Profile = () => {
     const [looses, setLooses] = useState(0);
     const [pendingInvite, setPendingInvite] = useState(false);
     const [friends, setFriends] = useState(FriendTmp);
-    const [user, setUser] = useState({username: 'test', avatar: 'test', id: 0, pendingInvite: false,});
+    const [user, setUser] = useState({username: 'Marc', avatar: '../../../../images/DefaultAvatar.png', id: 0, pendingInvite: false,});
     const [games, setGames] = useState(GameDataTmp);
     const [privateGame, setPrivateGame] = useState(false);
-
 
     useEffect(() => {
         let bool = true;
@@ -194,6 +196,26 @@ export const Profile = () => {
     return (
         <div className="container profilepage">
             <div className="row">
+                <div className="row">
+                    <div className="nameAvatar">
+                        <div>
+                            <img className="avatar" src={DefaultAvatar} alt=""></img>
+                        </div>
+                        <div>
+                        <Typography fontSize={32} fontStyle="italic">{user.username}</Typography>
+                        </div>
+                    </div>
+                    {
+                        pendingInvite ? 
+                        <div className="row">
+                            <div>
+                                <Typography>You have a pending game invite</Typography>
+                                <button onClick={acceptInvite} type="button">Accept</button>
+                            </div>
+                        </div>
+                        : <></>
+                    }
+                </div>
                 <div className="row profile-content">
                     <div className="row">
                             <Typography fontSize={32} fontStyle="italic">Games Statistics</Typography>
@@ -210,11 +232,13 @@ export const Profile = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
                                     <td>{wins}</td>
                                     <td> - </td>
                                     <td>{looses}</td>
                                     <td> - </td>
-                                    <td>{played}</td>    
+                                    <td>{played}</td>   
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -230,15 +254,24 @@ export const Profile = () => {
                                         <th>Player 1</th>
                                         <th> - </th>
                                         <th>Player 2</th>
+                                        <th>Player 1 Score</th>
+                                        <th>Player 2 Score</th>
+                                        <th>Winner</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {games.filter((game: GameData) => !game.currentlyGoingOn && (game.firstPlayerId === user.id || game.secondPlayerId === user.id)).map((gameData: GameData) => 
                                     <tr key={gameData.gameId}>
                                         <td>#{gameData.gameId}</td>
-                                        <td>{gameData.firstPlayerName} - {gameData.firstPlayerScore}</td>
+                                        <td>{gameData.firstPlayerName}</td>
                                         <td> VS </td>
-                                        <td>{gameData.secondPlayerName} - {gameData.secondPlayerScore}</td>
+                                        <td>{gameData.secondPlayerName}</td>
+                                        <td>{gameData.firstPlayerScore} points</td>
+                                        <td>{gameData.secondPlayerScore} points</td>
+                                        {
+                                        gameData.firstPlayerScore >  gameData.secondPlayerScore ? 
+                                        <td>{gameData.firstPlayerName}</td> : <td>{gameData.secondPlayerName}</td>
+                                        }
                                     </tr>
                                     )}
                                 </tbody>

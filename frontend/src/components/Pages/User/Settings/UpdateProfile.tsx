@@ -40,7 +40,7 @@ const UploadImg = (props: {uploaded: (url: string) => void}) => {
 
 export const UpdateProfile = () => {
     const [id, setId] = useState(0);
-    const [username, setUsername] = useState(' ');
+    const [username, setUsername] = useState('');
     const [mail, setMail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [avatar, setAvatar] = useState('');
@@ -82,6 +82,11 @@ export const UpdateProfile = () => {
     //         bool = false;
     //     }
     // }, []);
+
+    useEffect(() => {
+        console.log(avatar);
+    }, [avatar]);
+    
 
     const submit = async () => {
         try {

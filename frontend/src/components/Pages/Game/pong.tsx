@@ -121,6 +121,7 @@ export const GamePong = () => {
 		else if (e.keyCode == 37)
 			client.send(JSON.stringify({type:'callMouvRaq', sence:+5, raquette:raqId, game:game}));
 	}
+
 	return (
 		<HeroContainer>
 			<HeroContent id="pong"></HeroContent>

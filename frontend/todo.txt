@@ -1,4 +1,0 @@
-commencer a plancher sur le leaderboard en apprenant a utiliser context
-integrer l'API 42 sur la page de SignIn
-Faire le chat
-Terminados !

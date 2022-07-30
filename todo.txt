@@ -1,0 +1,4 @@
+Creer une database NestJs pour communiquer des infos sur l'user
+Checker l'API de 42 pour voir si ils nous renvoient des datas (typiquement le login ce serait pas mal)
+Mettre en place le 2FA
+Revoir le rebond de la balle pour pas qu' il ait toujours le m^eme angle selon la ou il tape sur la raquette

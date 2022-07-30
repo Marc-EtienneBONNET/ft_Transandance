@@ -6,7 +6,8 @@ import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import { HEADER_HEIGHT } from "../../../../utils/constants";
 import { AppTitle } from "../../../Header/AppTitle";
 
-export const SignIn2FA = () => {
+export const SignIn2FA = (props: any) => {
+    console.log(props)
     const [code, setCode] = useState(' ');
     const [redi, setRedi] = useState(false);
     const [fail, setFail] = useState(false);

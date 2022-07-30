@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { GameData } from "../../../../datamodels/game";
 import { User } from "../../../../datamodels/user";
 import { HeroContainer } from "../../PlayGame";
+import DefaultAvatar from "../../../../images/DefaultAvatar.png"
 
 var GameDataTmp = [
     {
@@ -116,15 +117,22 @@ export const PublicProfile = (props: any) => {
             
             <div className="row">
                 <div className="row profile-content">
-                    <div className="row">
-                            <Typography fontSize={32} fontStyle="italic">{publicUser.username}</Typography>
+                    <div className="nameAvatar">
+                        <div>
+                            <img className="avatar" src={DefaultAvatar} alt=""></img>
+                        </div>
+                        <div>
+                        <Typography fontSize={32} fontStyle="italic">{publicUser.username}</Typography>
+                        </div>
                     </div>
                     <div className="row">
                         <table className="customTable">
                             <tbody>
+                                <tr>
                                     <td><button onClick={(e) => {sendInvite(e, publicUser.id)}}>Invite for a game</button></td>
                                     <td> - </td>
                                     <td><button onClick={(e) => {addFriend(e, user.id, publicUser.id)}}>Invite as friend</button></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -143,11 +151,13 @@ export const PublicProfile = (props: any) => {
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
                                     <td>{publicUser.numberWins}</td>
                                     <td> - </td>
                                     <td>{publicUser.numberLosses}</td>
                                     <td> - </td>
-                                    <td>{publicUser.numberGamesPlayed}</td>    
+                                    <td>{publicUser.numberWins + publicUser.numberLosses}</td>    
+                                </tr>
                             </tbody>
                         </table>
                     </div>

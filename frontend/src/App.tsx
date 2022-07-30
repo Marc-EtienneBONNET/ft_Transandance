@@ -19,7 +19,8 @@ import { Profile } from './components/Pages/User/MyProfile/Profile';
 import { PublicProfiles } from './components/Pages/Social/PublicProfiles/PublicProfiles';
 import { PublicProfile } from './components/Pages/Social/PublicProfiles/PublicProfile';
 import { SignIn2FA } from './components/Pages/User/SignIn/SignIn2Fa';
-import { GamePong } from './components/Pages/game/pong'
+import { GamePong } from './components/Pages/Game/pong'
+import { Waiting } from './components/Pages/Game/Waiting';
 
 function App() {
   const appClient = new AppClient();
@@ -47,7 +48,7 @@ function App() {
               <Route path="/home" element={<Layout children={<Home/>} /> } />
               <Route path="/register" element={<Layout children={<Register/>} /> } />
               <Route path="/game" element={<Layout children={<Game/>} /> } />
-              <Route path="/game/waitingroom" element={<Layout children={<Home/>} /> } />
+              <Route path="/game/waiting" element={<Layout children={<Waiting/>} /> } />
               <Route path="/game/easy" element={<Layout children={<GamePong/>} /> } />
               <Route path="/game/medium:ID" element={<Layout children={<Home/>} /> } />
               <Route path="/game/hard:ID" element={<Layout children={<Home/>} /> } />

@@ -27,7 +27,7 @@ class SignIn extends Component {
                 <Typography fontStyle="italic" fontSize={28} color="textSecondary" marginBottom="15px">
                         To play the game you need to login with your 42 credentials
                 </Typography>
-                <Button size="large" variant="contained">Login with 42 OAuth</Button>
+                <Button size="large" variant="contained" href='https://api.intra.42.fr/oauth/authorize?client_id=1d7e9bf203617a46828968923d537bc2cb3b804626778d4da1813a9d24553987&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsignintwofa&response_type=code'>Login with 42 OAuth</Button>
             </HeroContent>
         </HeroContainer>
             

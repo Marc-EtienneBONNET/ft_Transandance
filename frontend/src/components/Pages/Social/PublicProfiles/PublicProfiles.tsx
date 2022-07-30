@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, } from "react-router-dom";
 import User from "../../../../datamodels/user";
 import "./style/style.css"
+import DefaultAvatar from "../../../../images/DefaultAvatar.png"
 
 var UsersTmp = [
     {
@@ -95,7 +96,7 @@ export const PublicProfiles = () => {
                         {users.filter((users) => users.id !== user.id).map((usersData) =>
 
                             <tr key={usersData.id} className="users-table">
-                                <td><img src={`${usersData?.avatar}`} className="avatarIMG" alt=""></img></td>
+                                <td><img src={DefaultAvatar} className="avatarIMG" alt=""></img></td>
                                 <td> - </td>
                                 <td>{usersData.username}</td>
                                 <td> - </td>
