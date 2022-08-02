@@ -21,6 +21,7 @@ import { PublicProfile } from './components/Pages/Social/PublicProfiles/PublicPr
 import { SignIn2FA } from './components/Pages/User/SignIn/SignIn2Fa';
 import { GamePong } from './components/Pages/Game/pong'
 import { Waiting } from './components/Pages/Game/Waiting';
+import axios from 'axios';
 
 function App() {
   const appClient = new AppClient();

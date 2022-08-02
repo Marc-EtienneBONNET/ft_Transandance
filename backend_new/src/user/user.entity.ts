@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
+import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn} from "typeorm";
 
 @Entity('users')
 export class User {
-    @PrimaryColumn({ unique: true})
+    @PrimaryColumn({ unique: true })
     id: number;
     @Column()
     avatar: string;
@@ -16,8 +16,11 @@ export class User {
     pendingInvite: boolean;
     @Column()
     status: string;
+    @ManyToMany(() => User)
+    @JoinTable()
+    friends: User[];
+    @Column()
+    twoFactorSecret: string;
     @Column()
     authentication: boolean;
-    @Column({ nullable: true })
-    twoFactorSecret?: string;
 }

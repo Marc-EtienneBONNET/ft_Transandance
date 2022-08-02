@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { CustomVideo } from "./video";
-import { Typography, styled as StyledM, Box } from "@mui/material";
+import { Typography, styled as StyledM, Box, avatarClasses } from "@mui/material";
 import { AppContext } from "../../../contexts";
+import axios from "axios";
 
 export const PageTitle = ({ title }: {title: string}) => (
     <StyledPageTitle variant="h2" component="h3" color="textSecondary" align="center">
@@ -36,7 +37,20 @@ const HeroContent = styled.div`
 
 export const Home = () =>
 {
-    console.log("We come here");
+    useEffect(() => {
+        const getHello = async () => {
+            try
+            {
+                const hello = await axios.get('getHello')
+                console.log(hello);
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+        getHello();    
+    });
+    
     const context = useContext(AppContext);
     return (
         <HeroContainer>
