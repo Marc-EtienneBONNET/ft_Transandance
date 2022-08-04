@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
-import { verifyUser } from './authentication/authentication.guard';
+import { verifyUser } from './authentication/intra-auth'
 import { AuthService } from './authentication/authentication.service';
 import { User } from './user.entity';
 import { UserService } from './user.service';
+import { RegisterModel } from './authentication/models/models';
 
 @Controller('user')
 export class UserController {
@@ -25,6 +26,13 @@ export class UserController {
     }
 
     @UseGuards(verifyUser)
+    @Post("updateUser")
+    async updateUser(@Req() request: Request, @Body() data: RegisterModel) {
+        const user = await this.authService.clientID(request);
+        await this.userService.update(user, data);
+    }
+
+    @UseGuards(verifyUser)
     @Get("getActiveUserID")
     async getActiveUserID(@Req() request: Request) {
       const id = await this.authService.clientID(request);
@@ -37,14 +45,6 @@ export class UserController {
         return await this.userService.findAllUserFriends();
     }
 
-    // @UseGuards(verifyUser)
-    // @Get("userWithFriends")
-    // async getUserWithFriends(@Req() request: Request): Promise<User> {
-    //     const id = await this.authService.clientID(request);
-
-    //     return await this.userService.findUserWithFriends(id);
-    // }
-
     @UseGuards(verifyUser)
     @Post("saveFriendToUser")
     async saveFriendToUser(@Body() message): Promise<User[]> {
@@ -56,5 +56,4 @@ export class UserController {
     async deleteFriendToUser(@Body() message): Promise<User[]> {
       return await this.userService.deleteFriendFromUser(message.userID, message.friendID);
     }
-
 }   

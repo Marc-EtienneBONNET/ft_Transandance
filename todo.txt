@@ -1,5 +1,3 @@
-@Req and @Res
-Comment everything
-@UseGuards
-JwtService
-@Res({passthrough: true}
+S'occuper du management des avatars en back
+Comprendre un peu mieux comment JWT se comporte
+S'occuper de tous les appels backend restants concernant l'user

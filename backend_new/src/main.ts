@@ -11,11 +11,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe())
   app.enableCors({
-    "origin": "http://localhost:3000",
-    "credentials": false,
+    "origin": "http://localhost:3001",
+    "credentials": true,
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
-    "optionsSuccessStatus": 200
+    "optionsSuccessStatus": 200,
   })
   await app.listen(3000);
 }

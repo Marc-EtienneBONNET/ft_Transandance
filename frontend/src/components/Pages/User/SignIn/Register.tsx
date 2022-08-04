@@ -1,35 +1,39 @@
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HeroContainer } from "../../PlayGame";
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import "../style/style.css"
+import axios from "axios";
 
 export const Register = () => {
     const [username, setUsername] = useState('');
-    const [mail, setMail] = useState('');
+    const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [redirect, setRedirect] = useState(false);
     const [invalid, setInvalid] = useState(false);
 
     const navigate = useNavigate();
-    
+
+    const submit = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        try {
+            // const data = await axios.get('user');
+            // console.log(data)
+            await axios.post('register', {username, email, phoneNumber});
+            setRedirect(true);
+        }
+        catch (error){
+            console.log(error)
+            setInvalid(true);
+        }
+    }
+
     useEffect(() => {
         if (redirect && !invalid){
             return navigate("/home");
         }
     },[redirect]);
-
-    const submit = async () => {
-        try {
-            // post("update", {username, mail, phoneNumber});
-            setRedirect(true);
-            setInvalid(false);
-        }
-        catch (error){
-            setInvalid(true);
-        }
-    }
 
     return (
         <HeroContainer>
@@ -41,7 +45,7 @@ export const Register = () => {
                 </div>
                 <div className="form-field">
                     <label>Mail </label>
-                    <input required id="floatingInput" onChange={e => setMail(e.target.value)} />
+                    <input required id="floatingInput" onChange={e => setEmail(e.target.value)} />
                 </div>
                 <div className="form-field">
                     <label>Phone Number </label>

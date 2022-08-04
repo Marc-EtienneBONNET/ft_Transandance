@@ -3,35 +3,35 @@ import { JwtService } from "@nestjs/jwt";
 import { AuthGuard } from "@nestjs/passport";
 import { Response, Request} from "express";
 import { UserService } from "../user.service";
-import { verifyUser } from "./authentication.guard";
+import { verifyUser } from "./intra-auth";
 import { AuthService } from "./authentication.service";
-import { RegisterDto } from "./models/models";
+import { RegisterModel } from "./models/models";
 
 @Controller()
 export class AuthController {
     constructor(
+        
+        private authService: AuthService,
         private userService: UserService,
-        private jwtService: JwtService,
-        private authService: AuthService
+        private jwtService: JwtService
     ) {}
+    
 
     @UseGuards(AuthGuard('intra'))
-    @Get('auth/login')
-    async login(@Req() req, @Res({passthrough: true}) response: Response) {
-        await response.cookie('clientID', req.user, {httpOnly: true});
-        const client = await this.jwtService.verifyAsync(req.user);
-        const clientData = await this.userService.findOne(client['id']);
+    @Get('authentication/login')
+    async login(@Req() request, @Res({passthrough: true}) response: Response) {
+        await response.cookie('clientID', request.user, {httpOnly: true});
+        const client = await this.jwtService.verifyAsync(request.user);
+        const clientData = await this.userService.findOne(client.id);
         if (!clientData) {
-            return response.redirect('http://localhost:3000/register')
+            return response.redirect('http://localhost:3001/register')
+        }
+        else if (clientData.twofa == true) {
+            return response.redirect('http://localhost:3001/2fasignin');
         }
         else {
             await this.userService.setOnline(client['id']);
-        }
-        if (clientData.authentication == true) {
-            return response.redirect('http://localhost:3000/twofactor');
-        }
-        else {
-            return response.redirect('http://localhost:3000/home')
+            return response.redirect('http://localhost:3001/home')
         }
     }
 
@@ -39,15 +39,15 @@ export class AuthController {
     @Get('2fa/generate')
     async activate2fa(@Req() request: Request) {
         const clientID = await this.authService.clientID(request);
-        const url = await this.authService.twoFactorAuthSecret(clientID);
-        return this.authService.createQRcode(url);
+        const url = await this.authService.generateTwoFactorAuthSecret(clientID);
+        return this.authService.createQRImage(url);
     }
 
     @UseGuards(verifyUser)
     @Post('2fa/verify')
     async verify2fa(@Req() request: Request, @Body() data) {
         const clientID = await this.authService.clientID(request);
-        const validation = await this.authService.twoFactorAuthVerify(data.code, clientID);
+        const validation = await this.authService.verifyTwoFactorSecret(data.code, clientID);
         if (!validation)
             throw new UnauthorizedException('Wrong authentication code');
         else
@@ -58,8 +58,8 @@ export class AuthController {
     @UseGuards(verifyUser)
     @Post('2fa/login')
     async login2fa(@Req() request: Request, @Body() data) {
-        const clientID = await this.authService.clientID(request);
-        const validation = await this.authService.twoFactorAuthVerify(data.code, clientID);
+        const client = await this.authService.clientID(request);
+        const validation = await this.authService.verifyTwoFactorSecret(data.code, client);
         if (!validation)
             throw new UnauthorizedException('Wrong authentication code');
     }
@@ -74,7 +74,7 @@ export class AuthController {
 
     @UseGuards(verifyUser)
     @Post('register')
-    async register(@Body() data: RegisterDto, @Req() request: Request) {
+    async register(@Body() data: RegisterModel, @Req() request: Request) {
         const clientID = await this.authService.clientID(request);
         await this.authService.newUser(data, clientID);
     }
@@ -85,18 +85,11 @@ export class AuthController {
         return await this.userService.acceptGameInvite(data);
     }
 
-
     @UseGuards(verifyUser)
     @Get('userData')
     async getUserData(@Req() request: Request, @Body() data) {
         const clientID = await this.authService.clientID(request);
         return await this.userService.findOne(clientID);
-    }
-
-    @UseGuards(verifyUser)
-    @Post('publicUserData')
-    async getPublicUserData(@Req() request: Request, @Body() data) {
-        return await this.userService.findOne(data.id)
     }
 
     @UseGuards(verifyUser)
@@ -106,5 +99,12 @@ export class AuthController {
         const clientID = await this.authService.clientID(request);
         await this.userService.setOffline(clientID);
         return {message: 'Success'};
+    }
+
+    @UseGuards(verifyUser)
+    @Post('setOnline')
+    async setOnline(@Req() request: Request) {
+        const clientID = await this.authService.clientID(request);
+        await this.userService.setOnline(clientID);
     }
 }

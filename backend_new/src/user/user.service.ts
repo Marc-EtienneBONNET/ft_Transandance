@@ -14,7 +14,8 @@ export class UserService {
     }
 
     async findOne(id: any): Promise<User> {
-        return this.userRepository.findOne(id);
+        const user = this.userRepository.findOne({where: {id: id}});
+        return user;
     }
 
     async findPrivateGame(): Promise<User> {
@@ -29,16 +30,16 @@ export class UserService {
         return this.userRepository.update(id, data);
     }
 
-    async saveTwoFactorSecret(secret: string, clientID: number): Promise<any> {
+    async setTwoFactorSecret(secret: string, clientID: number): Promise<any> {
         return this.userRepository.update(clientID, { twoFactorSecret: secret });
     }
 
     async enableTwoFactor(clientID: number): Promise<any> {
-        return this.userRepository.update(clientID, { authentication: true})
+        return this.userRepository.update(clientID, { twofa: true})
     }
 
     async disableTwoFactor(clientID: number): Promise<any> {
-        return this.userRepository.update(clientID, { authentication: false})
+        return this.userRepository.update(clientID, { twofa: false})
     }
 
     async sendGameInvite(clientID: number): Promise<any> {
@@ -69,13 +70,9 @@ export class UserService {
         return await this.userRepository.find({ relations: ["friends"] });
     }
 
-    // async findUserWithFriends(userID: number): Promise<User> {
-    //     return await this.userRepository.findOne({id: userID, relations: ["friends"] });
-    // }
-
     async saveFriendToUser(userID: number, friendID: number): Promise<User[]> {
         const friendToAdd = await this.userRepository.findOne({where: {id: friendID}});
-        const userToAdd = await this.userRepository.findOne({where: {id: friendID}});
+        const userToAdd = await this.userRepository.findOne({where: {id: userID}});
         const allUsers = await this.findAllUserFriends();
 
         if (userID === friendID) {
@@ -95,7 +92,7 @@ export class UserService {
 
     async deleteFriendFromUser(userID: number, friendID: number): Promise<User[]> {
         const friendToDel = await this.userRepository.findOne({where: {id: friendID}});
-        const userToDel = await this.userRepository.findOne({where: {id: friendID}});
+        const userToDel = await this.userRepository.findOne({where: {id: userID}});
         const allUsers = await this.findAllUserFriends();
 
         if (userID === friendID) {

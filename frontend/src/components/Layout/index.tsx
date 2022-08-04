@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { styled, Box } from "@mui/material";
 import { FOOTER_HEIGHT } from "../../utils/constants";
 import { Footer } from "../Footer";
 import { NavMenu } from "../Menu";
 import { Header } from "../Header/header";
-import { AppContext } from "../../contexts";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LayoutWrapper = styled('div')`
   min-height: 100vh;
@@ -27,15 +27,33 @@ interface LayoutProps {
 
 export const Layout = (props: LayoutProps) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [unauth, setUnauth] = useState(false);
     const toggleMenu = () => setIsOpen((isOpen) => !isOpen);
     let nav = useNavigate();
-    const context = useContext(AppContext);
     
     useEffect(() => {
-        if (!context.user.isLoggedIn){
+        let bool = true;
+        const authorize = async () => {
+            try {
+                const user = await axios.get('userData');
+                console.log(user);
+                if (user.data.status === 'OFFLINE')
+                    setUnauth(true);
+            }
+            catch (error) {
+                if (bool)
+                    setUnauth(true);
+            }
+        }
+        authorize();
+        return () => {bool = false;}
+    },[]);
+    
+    useEffect(() => {
+        if (unauth){
             return nav("/");
         }
-    },[context.user.isLoggedIn]);
+    }, [unauth, nav]);
 
     return (
         <LayoutWrapper>

@@ -11,7 +11,7 @@ export class User {
     @Column( { unique: true })
     email: string;
     @Column({ unique: true })
-    phonenumber: string;
+    phoneNumber: string;
     @Column()
     pendingInvite: boolean;
     @Column()
@@ -22,5 +22,5 @@ export class User {
     @Column()
     twoFactorSecret: string;
     @Column()
-    authentication: boolean;
+    twofa: boolean;
 }

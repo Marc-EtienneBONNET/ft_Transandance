@@ -1,4 +1,3 @@
-import React from "react";
 import { Drawer as MuiDrawer, styled } from "@mui/material";
 import { DRAWER_WIDTH } from "../../utils/constants";
 import { navClosingStyle, navOpeningStyle } from "../../utils/theme";

@@ -1,33 +1,37 @@
-import { IsEmail, IsNotEmpty, IsPhoneNumber } from "class-validator";
+import { IsAlpha, IsEmail, IsNotEmpty, IsPhoneNumber, Length } from "class-validator";
 
-export class RegisterDto {
+export class RegisterModel {
     id: number;
     avatar: string;
+    @Length(3, 20)
     @IsNotEmpty()
+    @IsAlpha()
     username: string;
     @IsNotEmpty()
     @IsEmail()
     email: string;
     @IsNotEmpty()
     @IsPhoneNumber('FR')
-    phonenumber: string;
+    phoneNumber: string;
     authentication: boolean;
     pendingInvite: boolean;
     status: string;
     twoFactorSecret?: string;
 }
 
-export class UpdateDto {
+export class UpdateModel {
     id: number;
-    avatar: string;
+    avatar: string;mdai
+    @Length(3, 15)
     @IsNotEmpty()
+    @IsAlpha()
     username: string;
     @IsNotEmpty()
     @IsEmail()
     email: string;
     @IsNotEmpty()
     @IsPhoneNumber('FR')
-    phonenumber: string;
+    phoneNumber: string;
     authentication: boolean;
     twoFactorSecret?: string;
 }

@@ -5,39 +5,23 @@ import { useNavigate } from "react-router-dom";
 import { HeroContainer } from "../../PlayGame";
 import "../style/style.css"
 
-const EnableTwoFactor = () => {
+const DisableTwoFactor = () => {
     const [code, setCode] = useState('');
     const [QRCode, setQRCode] = useState(' ');
     const [redirect, setRedirect] = useState(false);
     const [invalid, setInvalid] = useState(false);
+    const [twoFa, setTwoFa] = useState(false);
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        let bool = true;
-        const getQRCode = async () => {
-            try {
-                const {data} = await axios.get('2fa/generate');
-                if (bool) {
-                    setQRCode(data);
-                }
-            }
-            catch (error) {
-                console.log('error occured getting QRCode image')
-            }
-        }
-        getQRCode();
-        return () => {
-            bool = false;
-        }
-    }, []);
-
-    const enable = async (e: SyntheticEvent) => {
+    const disable = async (e: SyntheticEvent) => {
         e.preventDefault();
         try {
             await axios.post('2fa/verify', {code: code});
-            alert("You successfully enabled 2FA authentication")
+            await axios.post('2fa/disable', {});
+            alert("You successfully disabled 2FA authentication")
             setRedirect(true);
+            setInvalid(false);
         }
         catch (error){
             setInvalid(true);
@@ -53,11 +37,8 @@ const EnableTwoFactor = () => {
     return (
         <HeroContainer>
             <form>
-                <Typography>Enable two factor authentication</Typography>
-                <Typography>Scan the QR code with Google Anthenticator</Typography>
-                <div>
-                    <img className="qrcodeimage" alt="QRCode" src={QRCode}></img>
-                </div>
+                <Typography>You currently have the two factor authentication enable</Typography>
+                <Typography>Enter the code from your Google Anthenticator app to disable it</Typography>
                 { invalid? <Typography>Wrong code, please try again</Typography> : <Typography></Typography>}
                 <div className="form-field">
                     <input required id="floatingInput" placeholder="12345" onChange={e => setCode(e.target.value)}/>
@@ -65,7 +46,7 @@ const EnableTwoFactor = () => {
                 </div>
                 <div className="form-field">
                     <div className="button">
-                        <Button onClick={enable} variant="contained">Enable</Button>
+                        <Button onClick={disable} variant="contained">Disable</Button>
                     </div>
                 </div>
             </form>
@@ -73,4 +54,4 @@ const EnableTwoFactor = () => {
     )
 }
 
-export default EnableTwoFactor;
+export default DisableTwoFactor;

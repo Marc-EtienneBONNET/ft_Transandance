@@ -2,8 +2,11 @@ import { Body, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { authenticator } from "otplib";
+import path, { join } from "path";
 import { UserService } from "../user.service";
-import { RegisterDto, UpdateDto } from "./models/models";
+import { RegisterModel, UpdateModel } from "./models/models";
+
+const QRCode = require('qrcode');
 
 @Injectable()
 export class AuthService {
@@ -12,20 +15,20 @@ export class AuthService {
         private userService: UserService,
     ) {}
 
-    async twoFactorAuthSecret(id: number) {
+    async generateTwoFactorAuthSecret(id: number) {
         const client = await this.userService.findOne(id);
         const secret = authenticator.generateSecret();
-        await this.userService.saveTwoFactorSecret(secret, id);
-        return authenticator.keyuri(client.email, 'ft_transcendence', secret);
+        await this.userService.setTwoFactorSecret(secret, id);
+        return authenticator.keyuri(client.email, 'mdaillet\'s ft_transcendence', secret);
     }
 
-    async createQRcode(url: string) {
+    async createQRImage(url: string) {
         var QR = require('qrcode');
-        await QR.toFile('./uploads/qr.png', url);
-        return {u: 'http://localhost:3000/api/uploads/qr.png'};
+        const dataUrl = await QR.toDataURL(url);
+        return dataUrl;
     }
 
-    async twoFactorAuthVerify(code: string, id: number) {
+    async verifyTwoFactorSecret(code: string, id: number) {
         const client = await this.userService.findOne(id);
         return authenticator.verify({token: code, secret: client.twoFactorSecret})
     }
@@ -36,16 +39,17 @@ export class AuthService {
         return data['id'];
     }
 
-    async newUser(@Body() data: RegisterDto, clientID: number) {
-        data.avatar = 'http://localhost:3000/api/uploads/DefaultAvatar.png';
+    async newUser(@Body() data: RegisterModel, clientID: number) {
+        data.avatar = 'http://localhost:3000/api/media/DefaultAvatar.png';
         data.id = clientID;
         data.authentication = false;
         data.pendingInvite = false;
         data.status = 'ONLINE';
+        data.twoFactorSecret = '';
         await this.userService.create(data);
     }
 
-    async updateUser(@Body() data: UpdateDto) {
+    async updateUser(@Body() data: UpdateModel) {
         await this.userService.update(data.id, data);
     }
 }

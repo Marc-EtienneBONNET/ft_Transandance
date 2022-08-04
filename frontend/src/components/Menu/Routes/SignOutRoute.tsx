@@ -1,11 +1,11 @@
-import { ListItemButton, ListItemIcon, ListItemText, IconButton, styled } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { ListItemButton, ListItemIcon, IconButton, styled } from '@mui/material';
 import { ExitToApp } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export const SignOutRoute = () => {
     const handleSignOutClick = async () => {
-        //await serverpost("logout")
+        await axios.post('logout', {})
     };
     
     return (

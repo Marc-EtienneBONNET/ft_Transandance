@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { HeroContainer } from "../../PlayGame";
-import React from "react";
 import { Button, Typography } from "@mui/material";
 import "../style/style.css"
 import UploadIcon from '@mui/icons-material/Upload';
-import styled, { useTheme } from "styled-components";
-
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-`;
+import axios from "axios";
 
 const UploadImg = (props: {uploaded: (url: string) => void}) => {
 
@@ -39,58 +33,40 @@ const UploadImg = (props: {uploaded: (url: string) => void}) => {
 }
 
 export const UpdateProfile = () => {
-    const [id, setId] = useState(0);
     const [username, setUsername] = useState('');
-    const [mail, setMail] = useState('');
+    const [email, setMail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [avatar, setAvatar] = useState('');
     const [redirect, setRedirect] = useState(false);
     const [invalid, setInvalid] = useState(false);
-    const [authentication, setAuthentication] = useState(false);
-    const [unauthorized, setUnauthorized] = useState(false);
-
+    const [avatar, setAvatar] = useState('')
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     let bool = true;
-    //     const setDefaults = async () => {
-    //         try {
-    //             const {data} = await get('userData');
-    //             if (bool)
-    //                 setId(data.id);
-    //             if (bool)
-    //                 setUsername(data.username);
-    //             if (bool)
-    //                 setMail(data.mail);
-    //             if (bool)
-    //                 setPhoneNumber(data.phoneNumber);
-    //             if (bool)
-    //                 setAvatar(data.avatar);
-    //             if (bool)
-    //                 setUsername(data.username);
-    //             if (bool)
-    //                 setAuthentication(data.authentication);
-    //         }
-    //         catch (error){
-    //             if (bool)
-    //                 setUnauthorized(true);
-    //         }
-    //     }
-    //     setDefaults();
-    //     return () => {
-    //         bool = false;
-    //     }
-    // }, []);
-
     useEffect(() => {
-        console.log(avatar);
-    }, [avatar]);
-    
+        let bool = true;
+        const setDefaults = async () => {
+            try {
+                const {data} = await axios.get('userData');
+                if (bool) {
+                    setUsername(data.username);
+                    setMail(data.email);
+                    setPhoneNumber(data.phoneNumber);
+                    setAvatar(data.avatar)
+                }
+            }
+            catch (error){
+                console.log("Error occured whil fetching user data")
+            }
+        }
+        setDefaults();
+        return () => {
+            bool = false;
+        }
+    }, []);
 
     const submit = async () => {
         try {
-            // post(update, {username, mail, phoneNumber});
+            await axios.post('user/updateUser', {username, email, phoneNumber});
             setRedirect(true);
             setInvalid(false);
         }
@@ -103,10 +79,7 @@ export const UpdateProfile = () => {
         if (redirect && !invalid){
             return navigate("/home");
         }
-        else if (unauthorized){
-            return navigate("/");
-        }
-    },[redirect, unauthorized]);
+    },[redirect, invalid, navigate]);
     
     return (
         <HeroContainer>
@@ -114,15 +87,15 @@ export const UpdateProfile = () => {
                 <Typography fontSize={28}> {invalid ? "Invalid informations, please try again" : "Update your profile informations"} </Typography>
                 <div className="form-field">
                     <label>User Name </label>
-                    <input required id="floatingInput" onChange={e => setUsername(e.target.value)} defaultValue={username} placeholder="username"/>
+                    <input required id="floatingInput" onChange={e => setUsername(e.target.value)} placeholder={username}/>
                 </div>
                 <div className="form-field">
-                    <label>Mail </label>
-                    <input required id="floatingInput" onChange={e => setMail(e.target.value)} defaultValue={mail} placeholder="mail@example.com"/>
+                    <label>Email </label>
+                    <input required id="floatingInput" onChange={e => setMail(e.target.value)} placeholder={email}/>
                 </div>
                 <div className="form-field">
                     <label>Phone Number </label>
-                    <input required id="floatingInput" onChange={e => setPhoneNumber(e.target.value)} defaultValue={phoneNumber} placeholder="06 06 06 06 06"/>
+                    <input required id="floatingInput" onChange={e => setPhoneNumber(e.target.value)} placeholder={phoneNumber}/>
                 </div>
                 <div className="form-avatar">
                     <label> Upload avatar </label>

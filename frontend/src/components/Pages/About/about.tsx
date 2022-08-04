@@ -1,7 +1,6 @@
-import { Box, Button, ButtonGroup, Grid, Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography } from "@mui/material";
 import styled from "styled-components";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';import { PageTitle } from "../Home";
+import { PageTitle } from "../Home";
 import logo from "../../../images/svg-5.svg"
 
 const HeroContainer = styled.div`
@@ -42,10 +41,10 @@ export const About = () =>
         <HeroContainer>
             <HeroContent>
                 <PageTitle title={"About the game"} />
-                <Typography color="textSecondary" align="center" marginTop="30px" fontStyle={"italic"} >How to play: arrow up to move the paddle up, and down to move it down. Noting more. </Typography>
+                <Typography color="textSecondary" align="center" marginTop="30px" fontStyle={"italic"} >How to play: arrow up to move the paddle up, and down to move it down. Nothing more. </Typography>
                 <Box sx = {{ flexGrow: 1, p: 3 }} /> 
                 <PageTitle title={"About the Project"} />
-                <Typography color="textSecondary" align="center" marginTop="20px" marginBottom="20px" fontStyle={"italic"}>Project realised in TypeScrip React and NodeJS with a PostGreSQL database by Arthur Tinseau, Marc-Etienne Bonnet et Marc-Eloi Daillet.</Typography>
+                <Typography color="textSecondary" align="center" marginTop="20px" marginBottom="20px" fontStyle={"italic"}>Project realised in TypeScrip React and NestJS with a PostGreSQL database by Arthur Tinseau, Marc-Etienne Bonnet and Marc-Eloi Daillet.</Typography>
                 <LogoWrapper>
                     <StyledLogo src={logo} alt="logo" />
                 </LogoWrapper>

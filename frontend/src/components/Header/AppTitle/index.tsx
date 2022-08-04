@@ -1,7 +1,6 @@
 import { styled, Typography } from "@mui/material";
 import { APP_TITLE } from "../../../utils/constants";
 import { Link } from "react-router-dom";
-import { Home } from "../../Pages/Home";
 
 export const AppTitle = () => (
         <StyledAppTitle >

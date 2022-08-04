@@ -1,13 +1,13 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HeroContainer, HeroContent } from "../../PlayGame";
-import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import { HEADER_HEIGHT } from "../../../../utils/constants";
 import { AppTitle } from "../../../Header/AppTitle";
+import axios from "axios";
 
-export const SignIn2FA = (props: any) => {
-    console.log(props)
+export const SignIn2FA = () => {
     const [code, setCode] = useState(' ');
     const [redi, setRedi] = useState(false);
     const [fail, setFail] = useState(false);
@@ -15,9 +15,9 @@ export const SignIn2FA = (props: any) => {
 
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
-
         try {
-            // SEND THE CODE TO THE GOOGLE API LOOOOOOOLLLLLLLLLLLL
+            await axios.post('2fa/verify', {code: code});
+            await axios.post('setOnline');
             setRedi(true);
             setFail(false);
         }

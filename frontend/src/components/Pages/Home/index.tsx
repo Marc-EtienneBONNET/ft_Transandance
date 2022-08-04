@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { CustomVideo } from "./video";
-import { Typography, styled as StyledM, Box, avatarClasses } from "@mui/material";
-import { AppContext } from "../../../contexts";
+// import { CustomVideo } from "./video";
+import { Typography, styled as StyledM, Box } from "@mui/material";
 import axios from "axios";
 
 export const PageTitle = ({ title }: {title: string}) => (
@@ -37,27 +36,29 @@ const HeroContent = styled.div`
 
 export const Home = () =>
 {
+    const [username, setUsername] = useState('');
     useEffect(() => {
-        const getHello = async () => {
-            try
-            {
-                const hello = await axios.get('getHello')
-                console.log(hello);
-            } catch (error) {
-                console.log(error);
+        let bool = true;
+        const getUsername = async () => {
+            try {
+                const data = await axios.get('userData');
+                if (bool)
+                    setUsername(data.data.username);
             }
-
+            catch (error) {
+                console.log("error while fetching user data")
+            }
         }
-        getHello();    
-    });
-    
-    const context = useContext(AppContext);
+        getUsername();
+        return () =>{bool = false};
+    }, []);
+
     return (
         <HeroContainer>
             {/* <CustomVideo/> */}
             <HeroContent>
                 <PageTitle title={"Welcome"} />
-                <Typography fontSize={32} color="textSecondary"> {context.user.username} ! </Typography>
+                <Typography fontSize={32} color="textSecondary"> {username} ! </Typography>
                 <Box sx = {{ flexGrow: 1, p: 5 }} /> 
             </HeroContent>
         </HeroContainer>
