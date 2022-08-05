@@ -1,3 +1,2 @@
-S'occuper du management des avatars en back
-Comprendre un peu mieux comment JWT se comporte
-S'occuper de tous les appels backend restants concernant l'user
+Commencer le chat et continuer les relations user/user (genre friend et s' inviter en game)
+Utiliser l' api cote PONG pour avoir la data sur les games passees

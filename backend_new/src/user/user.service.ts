@@ -62,8 +62,8 @@ export class UserService {
         return this.userRepository.update(clientID, { status: 'OFFLINE' })
     }
 
-    async findUserName(data: any): Promise<User> {
-        return this.userRepository.findOne({where: {id: data.userId}})
+    async findUserByName(username: any): Promise<User> {
+        return this.userRepository.findOne({where: {username: username}})
     }
 
     async findAllUserFriends(): Promise<User[]> {

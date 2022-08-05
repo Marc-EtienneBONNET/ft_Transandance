@@ -42,7 +42,7 @@ export class AuthService {
     async newUser(@Body() data: RegisterModel, clientID: number) {
         data.avatar = 'http://localhost:3000/api/media/DefaultAvatar.png';
         data.id = clientID;
-        data.authentication = false;
+        data.twofa = false;
         data.pendingInvite = false;
         data.status = 'ONLINE';
         data.twoFactorSecret = '';

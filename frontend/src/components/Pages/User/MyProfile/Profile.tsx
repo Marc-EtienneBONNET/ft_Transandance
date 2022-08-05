@@ -6,6 +6,7 @@ import { User } from "../../../../datamodels/user";
 import { HeroContainer } from "../../PlayGame";
 import "../style/style.css"
 import DefaultAvatar from "../../../../images/DefaultAvatar.png"
+import axios from "axios";
 
 var GameDataTmp = [
     {
@@ -91,14 +92,14 @@ export const Profile = () => {
     const [looses, setLooses] = useState(0);
     const [pendingInvite, setPendingInvite] = useState(false);
     const [friends, setFriends] = useState(FriendTmp);
-    const [user, setUser] = useState({username: 'Marc', avatar: '../../../../images/DefaultAvatar.png', id: 0, pendingInvite: false,});
+    const [user, setUser] = useState({username: 'Marc', avatar: '', id: 0, pendingInvite: false,});
     const [games, setGames] = useState(GameDataTmp);
     const [privateGame, setPrivateGame] = useState(false);
 
     useEffect(() => {
         let bool = true;
         const getUser = async () => {
-            const data = user; //await getUserData();
+            const {data} = await axios.get('userData');
             if (bool)
                 setUser(data);
         }
@@ -199,7 +200,7 @@ export const Profile = () => {
                 <div className="row">
                     <div className="nameAvatar">
                         <div>
-                            <img className="avatar" src={DefaultAvatar} alt=""></img>
+                            <img className="avatar" src={user.avatar} alt=""></img>
                         </div>
                         <div>
                         <Typography fontSize={32} fontStyle="italic">{user.username}</Typography>

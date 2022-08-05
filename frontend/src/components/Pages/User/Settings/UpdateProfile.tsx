@@ -12,13 +12,16 @@ const UploadImg = (props: {uploaded: (url: string) => void}) => {
         if (files === null) return;
 
         const formData = new FormData();
-        formData.append('image', files[0]);
+        formData.append('avatar', files[0]);
 
         try {
-            // const {data} = await axios.post('upload', formData);
-            // props.uploaded(data.url);
+            const {data} = await axios.post('user/uploadImage', formData);
+            props.uploaded(data.url);
         }
-        catch (err) {props.uploaded('http://localhost:8000/api/uploads/egg.jpeg')}
+        catch (err)
+        {
+            props.uploaded('http://localhost:3000/api/user/media/DefaultAvatar.png')
+        }
     }
 
     return (
@@ -66,7 +69,7 @@ export const UpdateProfile = () => {
 
     const submit = async () => {
         try {
-            await axios.post('user/updateUser', {username, email, phoneNumber});
+            await axios.post('user/updateUser', {username, email, phoneNumber, avatar});
             setRedirect(true);
             setInvalid(false);
         }

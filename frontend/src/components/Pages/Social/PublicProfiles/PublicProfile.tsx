@@ -1,10 +1,8 @@
 import { Typography } from "@mui/material";
-import React, { SyntheticEvent, useEffect, useState} from "react";
+import { SyntheticEvent, useEffect, useState} from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { GameData } from "../../../../datamodels/game";
-import { User } from "../../../../datamodels/user";
-import { HeroContainer } from "../../PlayGame";
-import DefaultAvatar from "../../../../images/DefaultAvatar.png"
+import axios from "axios";
 
 var GameDataTmp = [
     {
@@ -48,35 +46,37 @@ var GameDataTmp = [
     },
 ]
 
-// type PublicProfileProp = {
-//     id: number;
-//     username: string;
-//     avatar: string;
-//     numberWins: number;
-//     numberLosses: number;
-//     numberGamesPlayed: number;
-// }
 
-export const PublicProfile = (props: any) => {
-    const {type} = useParams();
-    const UserData = useLocation().state as User;
-    
-    const [user, setUser] = useState({username: "test", avatar:"test", id: 1});
+export const PublicProfile = (props: any) => {    
+    const [user, setUser] = useState({username: "", avatar:"", id: 0});
+    const [publicUser, setPublicUser] = useState({username: "", avatar:"", id: 0});
     const [games, setGames] = useState(GameDataTmp);
     const [privateGame, setPrivateGame] = useState(false);
     const [unavailable, setUnunvailable] = useState(false);
-    const [publicUser, setPublicUser] = useState(UserData);
+    const [publicUserName, setPublicUserName] = useState(useLocation().state)
 
     useEffect(() => {
         let bool = true;
         const getUser = async () => {
-            const data = user; //await getUserData();
+            const {data} = await axios.get('userData')
             if (bool)
                 setUser(data);
         }
         getUser();
         return () => {bool = false};
     }, []);
+
+    useEffect(() => {
+        let bool = true;
+        const getPublicUser = async () => {
+            const {data} = await axios.get('user/findUser' + `${publicUserName}`) //await getUserData();
+            if (bool)
+                setPublicUser(data);
+        }
+        getPublicUser();
+        return () => {bool = false};
+    }, []);
+
 
     useEffect(() => {
         let bool = true;
@@ -114,12 +114,11 @@ export const PublicProfile = (props: any) => {
 
     return (
         <div className="container profilepage">
-            
             <div className="row">
                 <div className="row profile-content">
                     <div className="nameAvatar">
                         <div>
-                            <img className="avatar" src={DefaultAvatar} alt=""></img>
+                            <img className="avatar" src={publicUser.avatar} alt=""></img>
                         </div>
                         <div>
                         <Typography fontSize={32} fontStyle="italic">{publicUser.username}</Typography>
@@ -150,7 +149,7 @@ export const PublicProfile = (props: any) => {
                                     <th>Games Played</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            {/* <tbody>
                                 <tr>
                                     <td>{publicUser.numberWins}</td>
                                     <td> - </td>
@@ -158,7 +157,7 @@ export const PublicProfile = (props: any) => {
                                     <td> - </td>
                                     <td>{publicUser.numberWins + publicUser.numberLosses}</td>    
                                 </tr>
-                            </tbody>
+                            </tbody> */}
                         </table>
                     </div>
                     <div>

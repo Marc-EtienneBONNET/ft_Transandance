@@ -1,10 +1,22 @@
-import { Body, Controller, Get, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Request } from 'express';
 import { verifyUser } from './authentication/intra-auth'
 import { AuthService } from './authentication/authentication.service';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { RegisterModel } from './authentication/models/models';
+import { Observable, of } from 'rxjs';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+
+export const storage = { 
+    storage: diskStorage({
+        destination: './media',
+        filename(_, file, cb) {
+                return cb(null, `${file.originalname}`)
+        }
+    })
+};
 
 @Controller('user')
 export class UserController {
@@ -20,9 +32,9 @@ export class UserController {
     }
 
     @UseGuards(verifyUser)
-    @Get("findName")
-    async findUserName(@Query() query): Promise<User> {
-        return await this.userService.findUserName(query);
+    @Get("findUser:username")
+    async findUser(@Param('username') username): Promise<User> {
+        return await this.userService.findUserByName(username);
     }
 
     @UseGuards(verifyUser)
@@ -35,7 +47,7 @@ export class UserController {
     @UseGuards(verifyUser)
     @Get("getActiveUserID")
     async getActiveUserID(@Req() request: Request) {
-      const id = await this.authService.clientID(request);
+        const id = await this.authService.clientID(request);
         return { activeUserID: id };
     }
 
@@ -55,5 +67,17 @@ export class UserController {
     @Post("deleteFriendToUser")
     async deleteFriendToUser(@Body() message): Promise<User[]> {
       return await this.userService.deleteFriendFromUser(message.userID, message.friendID);
+    }
+
+    @UseGuards(verifyUser)
+    @Post('uploadImage')
+    @UseInterceptors(FileInterceptor('avatar', storage))
+    uploadFile(@UploadedFile() avatar, @Req() request: Request): Observable<Object> {
+        return of({url: `http://localhost:3000/api/user/media/${avatar.filename}`})
+    }
+
+    @Get('media/:avatar')
+    findAvatar(@Param('avatar') avatar, @Res() res): Observable<Object> {
+        return of(res.sendFile(avatar, {root: 'media'}));
     }
 }   

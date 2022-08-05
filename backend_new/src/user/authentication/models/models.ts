@@ -13,7 +13,7 @@ export class RegisterModel {
     @IsNotEmpty()
     @IsPhoneNumber('FR')
     phoneNumber: string;
-    authentication: boolean;
+    twofa: boolean;
     pendingInvite: boolean;
     status: string;
     twoFactorSecret?: string;
@@ -32,6 +32,6 @@ export class UpdateModel {
     @IsNotEmpty()
     @IsPhoneNumber('FR')
     phoneNumber: string;
-    authentication: boolean;
+    twofa: boolean;
     twoFactorSecret?: string;
 }

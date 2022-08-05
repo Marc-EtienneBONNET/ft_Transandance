@@ -36,7 +36,6 @@ export const Layout = (props: LayoutProps) => {
         const authorize = async () => {
             try {
                 const user = await axios.get('userData');
-                console.log(user);
                 if (user.data.status === 'OFFLINE')
                     setUnauth(true);
             }
