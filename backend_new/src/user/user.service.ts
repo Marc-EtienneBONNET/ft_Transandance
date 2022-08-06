@@ -71,9 +71,8 @@ export class UserService {
         return friends;
     }
 
-    async userFriends(id: number): Promise<User[]> {
-        //TODO HERE
-        return []
+    async userFriends(id: number): Promise<User> {
+        return await this.userRepository.findOne({where: { id }, relations: ["friends"]});
     }
 
     async addFriend(userID: number, friendID: number): Promise<User[]> {

@@ -47,7 +47,7 @@ const routes: Array<Route> = [
             {
                 key: 'router-publicprofiles',
                 title: 'Public Profiles',
-                description: 'The playes',
+                description: 'The Players',
                 isEnabled: true,
                 path: '/social/publicprofiles',
                 icon: EqualizerIcon,

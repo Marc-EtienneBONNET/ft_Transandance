@@ -3,9 +3,7 @@ import { Typography } from "@mui/material";
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { GameData } from "../../../../datamodels/game";
 import { User } from "../../../../datamodels/user";
-import { HeroContainer } from "../../PlayGame";
 import "../style/style.css"
-import DefaultAvatar from "../../../../images/DefaultAvatar.png"
 import axios from "axios";
 
 var GameDataTmp = [
@@ -92,7 +90,7 @@ export const Profile = () => {
     const [looses, setLooses] = useState(0);
     const [pendingInvite, setPendingInvite] = useState(false);
     const [friends, setFriends] = useState([]);
-    const [user, setUser] = useState({username: 'Marc', avatar: '', id: 0, pendingInvite: false,});
+    const [user, setUser] = useState({username: '', avatar: '', id: 0, pendingInvite: false,});
     const [games, setGames] = useState(GameDataTmp);
     const [privateGame, setPrivateGame] = useState(false);
 
@@ -111,9 +109,8 @@ export const Profile = () => {
         let bool = true;
         const getFriends = async () => {
             const {data} = await axios.get('user/userFriends');
-            console.log(data)
             if (bool)
-                setFriends(data);
+                setFriends(data.friends);
         }
         getFriends();
         return () => {bool = false};
@@ -301,14 +298,14 @@ export const Profile = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {friends.map((friend: User) =>
+                                {friends.map((friend: User) =>
                                 <tr key={friend.id}>
                                     <td><img src={`${friend.avatar}`} className="avatar" alt=""></img></td>
                                     <td>{friend.username}</td>
                                     <td>{friend.status}</td>
                                     <td><button onClick={(e) => {removeFriend(e, user.id, friend.id)}} type="button" className="buttonRemove">Remove Friend</button></td>
                                 </tr>
-                                )} */}
+                                )}
                             </tbody>
                         </table>
                     </div>

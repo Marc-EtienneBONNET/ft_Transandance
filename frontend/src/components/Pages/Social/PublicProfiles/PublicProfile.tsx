@@ -59,7 +59,6 @@ export const PublicProfile = (props: any) => {
         let bool = true;
         const getUser = async () => {
             const {data} = await axios.get('userData')
-            console.log(data)
             if (bool)
                 setUser(data);
         }
@@ -71,7 +70,6 @@ export const PublicProfile = (props: any) => {
         let bool = true;
         const getPublicUser = async () => {
             const {data} = await axios.get('user/findUser' + `${publicUserName}`) //await getUserData();
-            console.log(data)
             if (bool)
                 setPublicUser(data);
         }

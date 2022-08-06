@@ -16,8 +16,8 @@ export class User {
     status: string;
     @Column()
     twofa: boolean;
-    @Column()
-    twoFactorSecret: string;
+    @Column({nullable: true})
+    twoFactorSecret?: string;
     @Column()
     pendingInvite: boolean;
     @ManyToMany(() => User)

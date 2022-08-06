@@ -58,7 +58,7 @@ export class UserController {
     }
     @UseGuards(verifyUser)
     @Get("userFriends")
-    async userFriends(@Req() request: Request): Promise<User[]> {
+    async userFriends(@Req() request: Request): Promise<User> {
         const id = await this.authService.clientID(request);
         return await this.userService.userFriends(id);
     }
