@@ -88,7 +88,6 @@ export const Profile = () => {
     const [played, setPlayed] = useState(0);
     const [wins, setWins] = useState(0);
     const [looses, setLooses] = useState(0);
-    const [pendingInvite, setPendingInvite] = useState(false);
     const [friends, setFriends] = useState([]);
     const [user, setUser] = useState({username: '', avatar: '', id: 0, pendingInvite: false,});
     const [games, setGames] = useState(GameDataTmp);
@@ -110,20 +109,9 @@ export const Profile = () => {
         const getFriends = async () => {
             const {data} = await axios.get('user/userFriends');
             if (bool)
-                setFriends(data.friends);
+                setFriends(data.friends);                
         }
         getFriends();
-        return () => {bool = false};
-    }, [user]);
-
-    useEffect(() => {
-        let bool = true;
-        const getPendingInvite = async () => {
-            const data = pendingInvite; //await getUserPendingInvite();
-            if (bool)
-                setPendingInvite(data);
-        }
-        getPendingInvite();
         return () => {bool = false};
     }, [user]);
 
@@ -208,7 +196,7 @@ export const Profile = () => {
                         </div>
                     </div>
                     {
-                        pendingInvite ? 
+                        user.pendingInvite ? 
                         <div className="row">
                             <div>
                                 <Typography>You have a pending game invite</Typography>
