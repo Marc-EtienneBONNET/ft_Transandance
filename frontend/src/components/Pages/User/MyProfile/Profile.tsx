@@ -48,41 +48,6 @@ var GameDataTmp = [
     },
 ]
 
-var FriendTmp = [
-    {
-        id: 1,
-        username: "Michel",
-        isAdmin: false,
-        isLoggedIn: true,
-        avatar: "test",
-        status: "online",
-        numberWins: 0,
-        numberLosses: 0,
-        numberGamesPlayed: 0,
-    },
-    {
-        id: 2,
-        username: "Jean",
-        isAdmin: false,
-        isLoggedIn: true,
-        avatar: "test",
-        status: "online",
-        numberWins: 0,
-        numberLosses: 0,
-        numberGamesPlayed: 0,
-    },
-    {
-        id: 3,
-        username: "Pierre",
-        isAdmin: false,
-        isLoggedIn: true,
-        avatar: "test",
-        status: "online",
-        numberWins: 0,
-        numberLosses: 0,
-        numberGamesPlayed: 0,
-    }
-]
 
 export const Profile = () => {
     const [played, setPlayed] = useState(0);
@@ -174,7 +139,7 @@ export const Profile = () => {
     const removeFriend = async (e: SyntheticEvent, userId: number, friendId: number) => {
         e.preventDefault();
         try {
-            const ret = await axios.post("user/deleteFriend", {userID: userId, friendID: friendId})
+            await axios.post("user/deleteFriend", {userID: userId, friendID: friendId})
             alert("You deleted this friend");
             window.location.reload();
         }

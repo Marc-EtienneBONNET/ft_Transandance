@@ -67,7 +67,6 @@ export class UserController {
     @Post("addFriend")
     async addFriend(@Body() body): Promise<User[]> {
         const data = JSON.parse(JSON.stringify(body));
-        console.log(data);
         const userID = data.userID;
         const friendID = data.friendID;
         return await this.userService.addFriend(userID, friendID);
