@@ -52,21 +52,34 @@ export class UserController {
     }
 
     @UseGuards(verifyUser)
-    @Get("allUserFriends")
-    async getAllUserFriends(): Promise<User[]> {
-        return await this.userService.findAllUserFriends();
+    @Get("allFriends")
+    async allFriends(): Promise<User[]> {
+        return await this.userService.allFriends();
+    }
+    @UseGuards(verifyUser)
+    @Get("userFriends")
+    async userFriends(@Req() request: Request): Promise<User[]> {
+        const id = await this.authService.clientID(request);
+        return await this.userService.userFriends(id);
     }
 
     @UseGuards(verifyUser)
-    @Post("saveFriendToUser")
-    async saveFriendToUser(@Body() message): Promise<User[]> {
-      return await this.userService.saveFriendToUser(message.userID, message.friendID);
+    @Post("addFriend")
+    async addFriend(@Body() body): Promise<User[]> {
+        const data = JSON.parse(JSON.stringify(body));
+        console.log(data);
+        const userID = data.userID;
+        const friendID = data.friendID;
+        return await this.userService.addFriend(userID, friendID);
     }
   
     @UseGuards(verifyUser)
-    @Post("deleteFriendToUser")
-    async deleteFriendToUser(@Body() message): Promise<User[]> {
-      return await this.userService.deleteFriendFromUser(message.userID, message.friendID);
+    @Post("deleteFriend")
+    async deleteFriend(@Body() body): Promise<User[]> {
+        const data = JSON.parse(JSON.stringify(body));
+        const userID = data.userID;
+        const friendID = data.friendID;
+        return await this.userService.deleteFriend(userID, friendID);
     }
 
     @UseGuards(verifyUser)

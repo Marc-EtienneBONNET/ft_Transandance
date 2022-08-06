@@ -49,7 +49,7 @@ var GameDataTmp = [
 
 export const PublicProfile = (props: any) => {    
     const [user, setUser] = useState({username: "", avatar:"", id: 0});
-    const [publicUser, setPublicUser] = useState({username: "", avatar:"", id: 0});
+    const [publicUser, setPublicUser] = useState({username: "", avatar:"", id: 1});
     const [games, setGames] = useState(GameDataTmp);
     const [privateGame, setPrivateGame] = useState(false);
     const [unavailable, setUnunvailable] = useState(false);
@@ -59,6 +59,7 @@ export const PublicProfile = (props: any) => {
         let bool = true;
         const getUser = async () => {
             const {data} = await axios.get('userData')
+            console.log(data)
             if (bool)
                 setUser(data);
         }
@@ -70,6 +71,7 @@ export const PublicProfile = (props: any) => {
         let bool = true;
         const getPublicUser = async () => {
             const {data} = await axios.get('user/findUser' + `${publicUserName}`) //await getUserData();
+            console.log(data)
             if (bool)
                 setPublicUser(data);
         }
@@ -81,7 +83,7 @@ export const PublicProfile = (props: any) => {
     useEffect(() => {
         let bool = true;
         const getGameData = async () => {
-            const data = GameDataTmp; //await getAllGamesFromDB();
+            const data = GameDataTmp;
             if (bool)
                 setGames(data);
         }
@@ -102,9 +104,13 @@ export const PublicProfile = (props: any) => {
 
     const addFriend = async (e: SyntheticEvent, userId: number, friendId: number) => {
         e.preventDefault();
-        // const ret = await postMessage("userAddFriend", {userId: userId, friendId: friendId,})
-        // if (ret == SUCCESS)
-        //     alert("You added a new friend");
+        try {
+            const ret = await axios.post("user/addFriend", {userID: userId, friendID: friendId})
+            alert("You added a new friend");
+        }
+        catch (error) {
+            console.log("error occurred while adding this friend");
+        }
     }
 
     const navigate = useNavigate();

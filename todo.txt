@@ -1,2 +1,2 @@
-Commencer le chat et continuer les relations user/user (genre friend et s' inviter en game)
+Do the userFriends for the user profile, check how to store friends a better way
 Utiliser l' api cote PONG pour avoir la data sur les games passees

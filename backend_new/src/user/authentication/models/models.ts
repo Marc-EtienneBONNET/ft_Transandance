@@ -3,7 +3,7 @@ import { IsAlpha, IsEmail, IsNotEmpty, IsPhoneNumber, Length } from "class-valid
 export class RegisterModel {
     id: number;
     avatar: string;
-    @Length(3, 20)
+    @Length(3, 15)
     @IsNotEmpty()
     @IsAlpha()
     username: string;
@@ -21,7 +21,7 @@ export class RegisterModel {
 
 export class UpdateModel {
     id: number;
-    avatar: string;mdai
+    avatar: string;
     @Length(3, 15)
     @IsNotEmpty()
     @IsAlpha()

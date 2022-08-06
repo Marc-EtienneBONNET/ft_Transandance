@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm'
 import { User } from './user.entity';
@@ -66,42 +66,48 @@ export class UserService {
         return this.userRepository.findOne({where: {username: username}})
     }
 
-    async findAllUserFriends(): Promise<User[]> {
-        return await this.userRepository.find({ relations: ["friends"] });
+    async allFriends(): Promise<User[]> {
+        const friends = await this.userRepository.find({relations:["friends"]});
+        return friends;
     }
 
-    async saveFriendToUser(userID: number, friendID: number): Promise<User[]> {
-        const friendToAdd = await this.userRepository.findOne({where: {id: friendID}});
-        const userToAdd = await this.userRepository.findOne({where: {id: userID}});
-        const allUsers = await this.findAllUserFriends();
+    async userFriends(id: number): Promise<User[]> {
+        //TODO HERE
+        return []
+    }
 
+    async addFriend(userID: number, friendID: number): Promise<User[]> {
+        const friendToAdd = await this.userRepository.findOneBy({id: friendID});
+        const userToAdd = await this.userRepository.findOneBy({id: userID});
+        const allUsers = await this.allFriends();
         if (userID === friendID) {
             return [];
         }
         else {
             for (const user of allUsers) {
-                if (userID === userToAdd.id) {
+                if (user.id === userToAdd.id) {
                     const ifFriend = user.friends.filter((friend) => friend.id === friendToAdd.id);
                     if (!ifFriend.length || !user.friends.length)
+                    {
                         user.friends.push(friendToAdd);
+                    }
                 }
             }
             return this.userRepository.save(allUsers);
         }
     }
 
-    async deleteFriendFromUser(userID: number, friendID: number): Promise<User[]> {
-        const friendToDel = await this.userRepository.findOne({where: {id: friendID}});
-        const userToDel = await this.userRepository.findOne({where: {id: userID}});
-        const allUsers = await this.findAllUserFriends();
-
+    async deleteFriend(userID: number, friendID: number): Promise<User[]> {
+        const friendToDel = await this.userRepository.findOneBy({id: friendID});
+        const userToDel = await this.userRepository.findOneBy({id: userID});
+        const allUsers = await this.allFriends();
         if (userID === friendID) {
             return [];
         }
         else {
             for (const user of allUsers) {
-                if (userID === userToDel.id) {
-                    const ifFriend = user.friends.filter((friend) => friend.id === friendToDel.id);
+                if (user.id === userToDel.id) {
+                    user.friends = user.friends.filter((friend: User) => friend.id !== friendToDel.id);
                 }
             }
             return this.userRepository.save(allUsers);

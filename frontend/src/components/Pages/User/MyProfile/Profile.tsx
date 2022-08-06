@@ -91,7 +91,7 @@ export const Profile = () => {
     const [wins, setWins] = useState(0);
     const [looses, setLooses] = useState(0);
     const [pendingInvite, setPendingInvite] = useState(false);
-    const [friends, setFriends] = useState(FriendTmp);
+    const [friends, setFriends] = useState([]);
     const [user, setUser] = useState({username: 'Marc', avatar: '', id: 0, pendingInvite: false,});
     const [games, setGames] = useState(GameDataTmp);
     const [privateGame, setPrivateGame] = useState(false);
@@ -110,7 +110,8 @@ export const Profile = () => {
     useEffect(() => {
         let bool = true;
         const getFriends = async () => {
-            const data = FriendTmp; //await getUserFriends();
+            const {data} = await axios.get('user/userFriends');
+            console.log(data)
             if (bool)
                 setFriends(data);
         }
@@ -187,11 +188,14 @@ export const Profile = () => {
 
     const removeFriend = async (e: SyntheticEvent, userId: number, friendId: number) => {
         e.preventDefault();
-
-        // const ret = await post('deleteFriend', {userId: userId, friendId: friendId,});
-        // if (ret === Success)
-        //     alert("You've removed this friend")
-        // window.location.reload();
+        try {
+            const ret = await axios.post("user/deleteFriend", {userID: userId, friendID: friendId})
+            alert("You deleted this friend");
+            window.location.reload();
+        }
+        catch (error) {
+            console.log("error occurred while deleting this friend");
+        }
     }
 
     return (
@@ -297,14 +301,14 @@ export const Profile = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {friends.map((friend) =>
+                                {/* {friends.map((friend: User) =>
                                 <tr key={friend.id}>
-                                    <td><img src={`${friend.avatar}`} className="friendAvatar" alt=""></img></td>
+                                    <td><img src={`${friend.avatar}`} className="avatar" alt=""></img></td>
                                     <td>{friend.username}</td>
                                     <td>{friend.status}</td>
                                     <td><button onClick={(e) => {removeFriend(e, user.id, friend.id)}} type="button" className="buttonRemove">Remove Friend</button></td>
                                 </tr>
-                                )}
+                                )} */}
                             </tbody>
                         </table>
                     </div>

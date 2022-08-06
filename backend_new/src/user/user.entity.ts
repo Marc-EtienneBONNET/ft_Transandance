@@ -13,14 +13,14 @@ export class User {
     @Column({ unique: true })
     phoneNumber: string;
     @Column()
-    pendingInvite: boolean;
-    @Column()
     status: string;
-    @ManyToMany(() => User)
-    @JoinTable()
-    friends: User[];
+    @Column()
+    twofa: boolean;
     @Column()
     twoFactorSecret: string;
     @Column()
-    twofa: boolean;
+    pendingInvite: boolean;
+    @ManyToMany(() => User)
+    @JoinTable()
+    friends: User[];
 }
