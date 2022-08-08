@@ -22,6 +22,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/platform-socket.io": "^9.0.8",
+    "@nestjs/websockets": "^9.0.8",
+    "aws": "^0.0.3-2",
+    "cli": "^1.0.1",
+
     "@nestjs/apollo": "^10.0.19",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.7",
@@ -49,6 +54,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "socket.io": "^4.5.1",
     "typeorm": "^0.3.7",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.13",

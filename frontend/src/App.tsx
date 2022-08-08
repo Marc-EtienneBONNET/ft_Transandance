@@ -16,15 +16,14 @@ import { Profile } from './components/Pages/User/MyProfile/Profile';
 import { PublicProfiles } from './components/Pages/Social/PublicProfiles/PublicProfiles';
 import { PublicProfile } from './components/Pages/Social/PublicProfiles/PublicProfile';
 import { SignIn2FA } from './components/Pages/User/SignIn/SignIn2Fa';
-import { GamePong } from './components/Pages/Game/pong'
-import { Waiting } from './components/Pages/Game/Waiting';
+import { Pong } from './components/Pages/Game/index'
 import EnableTwoFactor from './components/Pages/User/Settings/EnableTwoFa';
 import DisableTwoFactor from './components/Pages/User/Settings/DisableTwoFactor';
 import TwoFactor from './components/Pages/User/Settings/TwoFactor';
 
+
 function App() {
   const [mode, setMode] = useState(false); // Create a variable so we can define the mode on being either light or dark
-  
   const themeMode = useMemo(
     () => ({
       toggleThemeMode: () => {
@@ -46,8 +45,8 @@ function App() {
             <Route path="/home" element={<Layout children={<Home/>} /> } />
             <Route path="/register" element={<Layout children={<Register/>} /> } />
             <Route path="/game" element={<Layout children={<Game/>} /> } />
-            <Route path="/game/waiting" element={<Layout children={<Waiting/>} /> } />
-            <Route path="/game/easy" element={<Layout children={<GamePong/>} /> } />
+            {/* <Route path="/game/waiting" element={<Layout children={<Waiting/>} /> } /> */}
+            <Route path="/game/easy" element={<Layout children={<Pong/>} /> } />
             <Route path="/game/medium:ID" element={<Layout children={<Home/>} /> } />
             <Route path="/game/hard:ID" element={<Layout children={<Home/>} /> } />
             <Route path="/game/spectate" element={<Layout children={<Home/>} /> } />  

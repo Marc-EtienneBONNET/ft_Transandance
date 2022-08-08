@@ -5,9 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './user/authentication/authentication.module';
-import { ChatService } from './chat/chat.service';
-import { ChatController } from './chat/chat.controller';
-import { ChatModule } from './chat/chat.module';
+import { SocketModule } from './pong/socket/socketModule';
 
 @Module({
   imports: [
@@ -15,18 +13,18 @@ import { ChatModule } from './chat/chat.module';
     TypeOrmModule.forRoot({
       type: "postgres",
       port: 5432,
-      host: process.env.DATABASE_HOST,
-      username: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
+      host: "localhost",//process.env.DATABASE_HOST,
+      username: "postgres",//process.env.DATABASE_USER,
+      password: "root",//process.env.DATABASE_PASSWORD,
+      database: "transandance",//process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true,
     }),
     UserModule,
     AuthModule,
-    ChatModule,
+    SocketModule
   ],
-  controllers: [AppController, ChatController],
-  providers: [AppService, ChatService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
