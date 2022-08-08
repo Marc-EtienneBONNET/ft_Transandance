@@ -9,7 +9,7 @@ import "reflect-metadata";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useWebSocketAdapter(new WsAdapter(app));
+ // app.useWebSocketAdapter(new WsAdapter(app));
   app.use(cookieParser())
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe())

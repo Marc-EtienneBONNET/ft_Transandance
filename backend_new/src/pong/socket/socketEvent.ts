@@ -15,6 +15,9 @@ let myBall;
 	}
 })
 export class SocketEvents{
+	constructor() {
+		console.log("On est bien la !");
+	}
 	@WebSocketServer()
 	server: Server;
 	handleConnection(client: Socket){
@@ -153,5 +156,3 @@ async function end(data)
 	await dataFc.insertHistorique(structApiPong, data);
 	await dataFc.delateGame(structApiPong, myGame);
 }
-
-console.log("salut");
