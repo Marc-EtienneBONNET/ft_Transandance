@@ -1,1 +1,37 @@
+version: "3"
+
 services:
+  postgres:
+    image: postgres:13.3
+    ports:
+      - "35500:5432"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+  trans_backend:
+    build:
+      dockerfile: backend-dockerfile
+      context: .
+    depends_on:
+     - postgres
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://user:password@postgres:5432/database
+      NODE_ENV: development
+      PORT: 3000
+
+  trans_frontend:
+    build:
+      dockerfile: frontend-dockerfile
+      context: .
+    depends_on:
+      - trans_backend
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - "3001:3000"
