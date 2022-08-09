@@ -1,7 +1,6 @@
-import { ThemeProvider, createTheme, responsiveFontSizes, Theme} from '@mui/material/styles'
+import { createTheme, responsiveFontSizes, Theme} from '@mui/material/styles'
 import { DRAWER_WIDTH } from './constants';
 import { CSSObject} from '@mui/material';
-import { orange, red, yellow } from '@mui/material/colors';
 
 export const getCustomDarkTheme = () => {
     let darkTheme = createTheme({

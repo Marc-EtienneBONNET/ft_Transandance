@@ -1,5 +1,4 @@
-import { Box, Button, ButtonGroup, Grid, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import styled from "styled-components";
 import { CustomVideo } from "./video";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';import { PageTitle } from "../Home";
@@ -31,13 +30,13 @@ export const Game = () =>
 {
     const navigate = useNavigate();
     const easyWaiting = () => {
-        return navigate("/game/waiting", {state: {type: "easy", userId: 0}});
+        return navigate("/game/waiting", {state: {type: "easy", private: false}});
     }
     const normalWaiting = () => {
-        return navigate("/game/waiting", {state: {type: "normal", userId: 0}});
+        return navigate("/game/waiting", {state: {type: "normal", private: false}});
     }
     const hardWaiting = () => {
-        return navigate("/game/waiting", {state: {type: "hard", userId: 0}});
+        return navigate("/game/waiting", {state: {type: "hard", private: false}});
     }
 
     return (

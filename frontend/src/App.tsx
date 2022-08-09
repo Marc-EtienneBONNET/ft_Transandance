@@ -20,6 +20,7 @@ import { Pong } from './components/Pages/Game/index'
 import EnableTwoFactor from './components/Pages/User/Settings/EnableTwoFa';
 import DisableTwoFactor from './components/Pages/User/Settings/DisableTwoFactor';
 import TwoFactor from './components/Pages/User/Settings/TwoFactor';
+import { Waiting } from './components/Pages/Game/Waiting';
 
 
 function App() {
@@ -45,10 +46,8 @@ function App() {
             <Route path="/home" element={<Layout children={<Home/>} /> } />
             <Route path="/register" element={<Layout children={<Register/>} /> } />
             <Route path="/game" element={<Layout children={<Game/>} /> } />
-            {/* <Route path="/game/waiting" element={<Layout children={<Waiting/>} /> } /> */}
-            <Route path="/game/easy" element={<Layout children={<Pong/>} /> } />
-            <Route path="/game/medium:ID" element={<Layout children={<Home/>} /> } />
-            <Route path="/game/hard:ID" element={<Layout children={<Home/>} /> } />
+            <Route path="/game/waiting" element={<Layout children={<Waiting/>} /> } />
+            <Route path="/game/game:id" element={<Layout children={<Pong/>} /> } />
             <Route path="/game/spectate" element={<Layout children={<Home/>} /> } />  
             <Route path="/social/chat" element={<Layout children={<Home/>} /> } />
             <Route path="/social/publicprofiles" element={<Layout children={<PublicProfiles/>} /> } />
