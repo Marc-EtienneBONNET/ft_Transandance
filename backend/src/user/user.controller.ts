@@ -45,8 +45,8 @@ export class UserController {
     }
 
     @UseGuards(verifyUser)
-    @Get("getActiveUserID")
-    async getActiveUserID(@Req() request: Request) {
+    @Get("getUserId")
+    async getUserId(@Req() request: Request) {
         const id = await this.authService.clientID(request);
         return { activeUserID: id };
     }
