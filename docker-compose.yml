@@ -12,31 +12,24 @@ services:
 
   trans_backend:
     build:
-      dockerfile: backend-dockerfile
+      dockerfile: ./backend
     expose:
-      - ${APP_SERVER_PORT}
-    # depends_on:
-    #  - postgres
+      - "3000"
+
     volumes:
       - ./backend:/usr/src/transcendence
     ports:
-      - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
-    environment:
-      API_HOST: ${API_SERVER_HOST}
-      API_SERVER_HOST: ${API_SERVER_HOST}
+      - "3000:3000"
+
     command: npm run start:dev
 
   trans_frontend:
     build:
-      dockerfile: frontend-dockerfile
-    # depends_on:
-    #   - trans_backend
-    environment:
-      - REACT_APP_PORT=${REACT_APP_PORT}
+      dockerfile: ./frontend
     expose:
-      - ${REACT_APP_PORT}
+      - "3001"
     ports:
-      - ${REACT_APP_PORT}:${REACT_APP_PORT}
+      - "3001:3001"
     volumes:
       - ./frontend/src:/usr/src/transcendence/src
       - ./frontend/public:/usr/src/transcendence/public
