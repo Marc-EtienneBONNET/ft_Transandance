@@ -1,37 +1,45 @@
 version: "3"
 
 services:
-  postgres:
-    image: postgres:13.3
-    ports:
-      - "35500:5432"
-    environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+  # postgres:
+  #   image: postgres:13.3
+  #   ports:
+  #     - "35500:5432"
+  #   environment:
+  #     POSTGRES_DB: "postgres"
+  #     POSTGRES_USER: "postgres"
+  #     POSTGRES_PASSWORD: "postgres"
 
   trans_backend:
     build:
       dockerfile: backend-dockerfile
-      context: .
-    depends_on:
-     - postgres
+    expose:
+      - ${APP_SERVER_PORT}
+    # depends_on:
+    #  - postgres
     volumes:
-      - ./backend:/usr/src/app
+      - ./backend:/usr/src/transcendence
     ports:
-      - "3000:3000"
+      - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
     environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/database
-      NODE_ENV: development
-      PORT: 3000
+      API_HOST: ${API_SERVER_HOST}
+      API_SERVER_HOST: ${API_SERVER_HOST}
+    command: npm run start:dev
 
   trans_frontend:
     build:
       dockerfile: frontend-dockerfile
-      context: .
-    depends_on:
-      - trans_backend
-    volumes:
-      - ./frontend:/usr/src/app
+    # depends_on:
+    #   - trans_backend
+    environment:
+      - REACT_APP_PORT=${REACT_APP_PORT}
+    expose:
+      - ${REACT_APP_PORT}
     ports:
-      - "3001:3000"
+      - ${REACT_APP_PORT}:${REACT_APP_PORT}
+    volumes:
+      - ./frontend/src:/usr/src/transcendence/src
+      - ./frontend/public:/usr/src/transcendence/public
+    links:
+      - trans_backend
+    command: npm run start
