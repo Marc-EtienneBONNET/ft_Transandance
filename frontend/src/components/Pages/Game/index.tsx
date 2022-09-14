@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:50:20 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/09/14 13:24:20 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/09/14 14:10:13 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -404,6 +404,9 @@ export const Pong = () => {
 		socket.on('messageEnd', async (data)=> {
 			end(socket, data);
 			await axios.post('user/setOnStatus')
+		})
+		socket.on('myEnd', async ()=> {
+			MesEnd(socket, myGame);
 		})
 		socket.on('update', (data)=> {
 			update(data);
