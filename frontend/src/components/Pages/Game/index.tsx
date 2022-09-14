@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:50:20 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/09/14 14:10:13 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:11:34 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,10 @@ export const Pong = () => {
 			str = "Winner !"
 		else if (data2.winner_id === 0)
 			str = "  End  "
-		else
+		else if (data.userId === data2.looser_id)
 			str = "looser !"
+		else 
+			str = "  End  "
 		ctx.font = "15pt Calibri,Geneva,Arial";
 		ctx.fillText(str, myGame.canvasX/2 - 35 ,  myGame.canvasY/2 - 30);
 		ctx.font = "20pt Calibri,Geneva,Arial";
@@ -253,6 +255,8 @@ export const Pong = () => {
 			ctx.fillText(data2.looser_point + " | " + data2.winner_point , myGame.canvasX/2 - 30,  myGame.canvasY/2 + 30);
 		socket.disconnect()
 	}
+	axios.post('user/sendGameInvite', {userID: data.userId, gameID:-1})
+	axios.post('user/sendUserInvite', {userID: data.userId, userInviteID:-1})
 	async function clean(){
 		ctx.clearRect(0,0, myGame.canvasX, myGame.canvasY);
 	}
@@ -392,8 +396,6 @@ export const Pong = () => {
 		await axios.get('game');
 		socket = await socketConnect();
 		socket.emit('Lancer de comunication', data);
-		await axios.post('user/sendGameInvite', {userID: data.userId, gameID:-1})
-		await axios.post('user/sendUserInvite', {userID: data.userId, userInviteID:-1})
 	    socket.on('invitation', async (data) => {
 			await axios.post('user/sendGameInvite', {userID: data.userID, gameID:data.gameID})
 			await axios.post('user/sendUserInvite', {userID: data.userID, userInviteID:data.userInviteID})

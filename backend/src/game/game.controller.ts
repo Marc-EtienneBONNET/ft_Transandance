@@ -16,6 +16,7 @@ export const storage = {
 export class GameController {
     constructor(
         private readonly gameService: GameService,
+        private readonly userService: UserService,
     ) {}
     @Get()
     async all(){
@@ -29,6 +30,21 @@ export class GameController {
     @Post('checkEnd')
     async getChanUsers(@Body() data){
         var tmp = await this.gameService.TakeGameByRaq(data.id);
+        if (tmp)
+        {
+
+            var raq1 = await this.gameService.TakeRaquetteById(tmp.raq1);
+            if (raq1)
+            {
+                await this.userService.sendGameInvite(raq1.user_id, -1);
+                await this.userService.sendGameInvite2(raq1.user_id, -1);
+            }
+            if (tmp.invite != -1)
+            {
+                await this.userService.sendGameInvite(tmp.invite, -1);
+                await this.userService.sendGameInvite2(tmp.invite, -1);
+            }
+        }
         if (tmp)
         {
             if (tmp.raq2 === -1)

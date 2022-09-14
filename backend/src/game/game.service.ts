@@ -83,8 +83,9 @@ export class GameService {
         return (ballTmp);
     }
 
-    async insertHistorique(data){
+    async insertHistorique(data, id){
         const histTmp: Historique = new Historique();
+        histTmp.id = id;
         histTmp.coter_winner = data.coter_winner;
         histTmp.winner_id = data.winner_id;
         histTmp.winner_name = data.winner_name;
@@ -112,6 +113,11 @@ export class GameService {
     async TakeGame(){
         let Games = await this.GamesRepository.find()
         return (Games);
+    }
+
+    async TakeHist(){
+        let hist = await this.HistoriqueRepository.find()
+        return (hist);
     }
 
     async TakeGameByRaq(id){
@@ -316,6 +322,8 @@ export class GameService {
         if (id_ball)
             await this.BallsRepository.remove(id_ball);
     }
+
+
     @WebSocketServer()
 	server: Server;
 	handleConnection(client: Socket){
@@ -446,7 +454,7 @@ export class GameService {
         let game = await this.TakehistById(data.myGame.id);
         if (!game)
         {
-            let res = await this.insertHistorique(data.hist);
+            let res = await this.insertHistorique(data.hist, data.myGame.id);
             await this.delateGame(data.myGame);
         }
         client.emit('messageEnd',data.hist);
@@ -479,6 +487,3 @@ export class GameService {
         return this.HistoriqueRepository.find();
     }
 }
-
-
-
