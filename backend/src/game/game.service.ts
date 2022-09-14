@@ -392,7 +392,7 @@ export class GameService {
             if (!tmpGame)
                 tmpGame = await this.insertGame(data.canvasX, data.type, true, data.invitationId,client.id);
         }
-        if (tmpGame.raq1 === -1)
+        if (tmpGame.raq1 === -1 && data.type != -1)
         {
             this.myBall = await this.insertBall(tmpGame.canvasX/2, tmpGame.canvasY/2, 1, 1); 
             await this.mouvGameBallId(tmpGame, this.myBall.id);
@@ -401,7 +401,7 @@ export class GameService {
             await this.mouvGameSocketId1(tmpGame,client.id);
             this.myRaq1 = raquette;
         }
-        else if (tmpGame.raq2 === -1)
+        else if (tmpGame.raq2 === -1 && data.type != -1)
         {
             let raquette = await this.insertRaquette(tmpGame.canvasX - (tmpGame.blocksize * 2),tmpGame.canvasY/2 - (tmpGame.blocksize * (5 - tmpGame.dificult))/2, tmpGame.blocksize * (5 - tmpGame.dificult), data.userId ,false);
             await this.mouvGameRaq2(tmpGame,raquette.id);
