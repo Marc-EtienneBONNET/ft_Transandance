@@ -451,12 +451,8 @@ export class GameService {
 
     async end(client, data)
     {
-        let game = await this.TakehistById(data.myGame.id);
-        if (!game)
-        {
-            let res = await this.insertHistorique(data.hist, data.myGame.id);
-            await this.delateGame(data.myGame);
-        }
+        await this.insertHistorique(data.hist, data.myGame.id);
+        await this.delateGame(data.myGame);
         client.emit('messageEnd',data.hist);
     }
 

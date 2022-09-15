@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:50:20 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/09/14 16:11:34 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/09/15 09:12:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ export const Pong = () => {
 		ctx.fillText("Waiting...", myGame.canvasX/2 - 100 ,  myGame.canvasY/2);
 	}
 
-	async function MesEnd(socket, data)
+	async function MesEnd(socket)
 	{
 		var loo;
 		var res;
@@ -222,7 +222,10 @@ export const Pong = () => {
 				res = new Historique(data2.winner.username,data2.looser.username,myGame.id);	
 			else 
 				res = new Historique("","", myGame.id);
-			socket.emit('end', {hist:res, myGame:myGame});
+			if (data.userId == res.winner_id)
+				socket.emit('end', {hist:res, myGame:myGame});
+			else
+				end(socket, res);	
 		})
 	}
 
@@ -254,9 +257,11 @@ export const Pong = () => {
 		else
 			ctx.fillText(data2.looser_point + " | " + data2.winner_point , myGame.canvasX/2 - 30,  myGame.canvasY/2 + 30);
 		socket.disconnect()
+		axios.post('user/sendGameInvite', {userID: data.userId, gameID:-1})
+		axios.post('user/sendUserInvite', {userID: data.userId, userInviteID:-1})
+		axios.post('user/setOnStatus')
 	}
-	axios.post('user/sendGameInvite', {userID: data.userId, gameID:-1})
-	axios.post('user/sendUserInvite', {userID: data.userId, userInviteID:-1})
+	
 	async function clean(){
 		ctx.clearRect(0,0, myGame.canvasX, myGame.canvasY);
 	}
@@ -405,17 +410,17 @@ export const Pong = () => {
 		});
 		socket.on('messageEnd', async (data)=> {
 			end(socket, data);
-			await axios.post('user/setOnStatus')
-		})
-		socket.on('myEnd', async ()=> {
-			MesEnd(socket, myGame);
+			
 		})
 		socket.on('update', (data)=> {
 			update(data);
 			if (myGame.raq2 === -1)
 				beforeStartGame();
 		   else if (myGame.winner !== -1)
-			   MesEnd(socket, myGame);
+		   {
+			   MesEnd(socket);
+			   return ;
+		   }
 		   else
 		   {
 			   clean();
